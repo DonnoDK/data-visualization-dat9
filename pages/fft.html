@@ -55,7 +55,7 @@ $(document).ready(function () {
 	function updateGraph(){
 		$.ajax({
 	        //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-	        url: "../data/Output.json",
+	        url: "data/Output.json",
 	        dataType: "json",
 	        success: function (response) {
 				var dx = [];
