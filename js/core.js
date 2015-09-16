@@ -4,4 +4,8 @@ $(document).ready(function () {
 			$("#content").html(response);
 		});
 	});
+
+	$.get("updated-ts.txt", function(response){
+		$("#version").text(response);
+	});
 });
