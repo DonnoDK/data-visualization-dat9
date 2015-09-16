@@ -1,0 +1,94 @@
+    <div class="row">
+	                <div class="col-lg-12">
+	                    <h1 class="page-header">FFT Graph</h1>
+	                </div>
+	                <!-- /.col-lg-12 -->
+	            </div>
+	    		<div class="row">
+	                <div class="col-lg-12">
+	 					<div class="row">
+	                		<div class="col-lg-10">
+	                    		<div class="panel panel-default">
+	                        		<div class="panel-heading">
+	                            		<i class="fa fa-bar-chart-o fa-fw"></i> EEG Data
+			                            
+			                            <div class="pull-right">
+			                                <div class="btn-group">
+			                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+			                                        Actions
+			                                        <span class="caret"></span>
+			                                    </button>
+			                                    <ul class="dropdown-menu pull-right" role="menu">
+			                                        <li>
+			                                        	<a href="#" id="fft-start-poll">Start Polling(60s)</a>
+			                                        </li>
+			                                        <li>
+			                                        	<a href="#" id="fft-force">Force Update</a>
+			                                        </li>
+			                                    </ul>
+			                                </div>
+			                            </div>
+	                    			</div>
+		                        <!-- /.panel-heading -->
+		                        <div class="panel-body" id="chartbody">
+		                            <div id="eeg-chart" style="width:800px;height:400px;"></div>
+		                        </div>
+		                        <!-- /.panel-body -->
+	                    	</div>
+	                    </div>
+<script type="text/javascript">
+$(document).ready(function () {
+	var graphDrawn = false;
+    Array.max = function( array ){
+        return Math.max.apply( Math, array );
+    };
+
+    $("#fft-force").on("click", function(){
+    	updateGraph();
+    });
+
+    $("#fft-start-poll").on("click", function(){
+    	updateGraph();
+    	setInterval(updateGraph, 60000);
+    });
+
+	function updateGraph(){
+		$.ajax({
+	        //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+	        url: "data/Output.json",
+	        dataType: "json",
+	        success: function (response) {
+				var dx = [];
+	            var dy = [];
+
+	            response.data.forEach(function(item) {
+	                dx.push(item[0]);
+	                dy.push(item[1]);
+	            });
+
+	            var options = {
+	                series: { lines: { show: true }, shadowSize: 0 },
+	                xaxis: { zoomRange: null, panRange: [0, Array.max(dx) + 100] },
+	                yaxis: { zoomRange: null, panRange: [0, Array.max(dy) + 100] },
+	                zoom: {
+	                    interactive: true
+	                },
+	                pan: {
+	                    interactive: true
+	                }
+	            };
+
+	            var el = $("#eeg-chart");
+	            $("#eeg-chart").css("width", $("#chartbody").width());
+	           $.plot(el, [response], options);
+	           graphDrawn = !0;
+            }
+		});
+	}
+
+	$(window).resize(function(){
+		if(graphDrawn)
+			updateGraph();
+	});
+});
+</script>
