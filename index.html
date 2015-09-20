@@ -8,113 +8,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="0" />
 
-    <title>Emotion Classification Data Suite</title>
+    <title>Biometric Data Analysis Suite</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Timeline CSS -->
-    <link href="dist/css/timeline.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="bower_components/morrisjs/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
 <body>
 
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Emotion Classification Data Suite</a>
+                <a class="navbar-brand" href="#">Biometric Data Analysis Suite</a>
             </div>
-            <!-- /.navbar-header -->
-             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-random"></i> <span id="version">Could not get version</span> 
-                    </a>
-                </li>
-            </ul>
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu"> 
-                        <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Data Exploration</a>
-                        </li>
-                        <li>
-                            <a href="#" data-content="fft"><i class="fa fa-dashboard fa-fw"></i> FFT Graphs</a>
-                        </li>
-                        <li>
-                            <a href="http//hvadsynesdaniel.dk/dat9/test"><i class="fa fa-hourglass-o"></i> Run Test</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#">Test</a>
+                    </li>
+                    <li>   
+                        <a href="#" id="version">Last Updated: NA</a>
+                    </li>
+                </ul>
             </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
-        <div id="page-wrapper">
-        	<!-- PAGECONTENT START -->
-        	<div class="page-conent" id="content">
-	        	<div class="row">
-	                <div class="col-lg-12">
-	                    <h1 class="page-header">Dashboard</h1>
-	                </div>
-                </div>
-            </div>
-            <!-- PAGE CONTENT END -->
+            <!-- /.navbar-collapse -->
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" style="margin: 10px; overflow-x: hidden;">
+
+        <div class="row" id="Content" style="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-bar-chart-o fa-fw"></i>EEG data
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                Actions
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li>
+                                                    <a href="#" id="fft-start-poll">Start Polling(60s)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" id="fft-force">Force Update</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body" id="chartbody">
+                                    <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                                </div>
+                            <!-- /.panel-body -->
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>GSR
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body" id="chartbody">
+                            <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                        </div>
+                    <!-- /.panel-body -->
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>FFT For Point
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body" id="chartbody">
+                            <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                        </div>
+                    <!-- /.panel-body -->
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>Test Data
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body" id="chartbody">
+                            <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                        </div>
+                    <!-- /.panel-body -->
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <!-- /.row -->
 
     </div>
-    <!-- /#wrapper -->
+    <!-- /.container -->
 
-    <!-- jQuery -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+    <script src="js/flot-data.js"></script>
+    <script src="js/jquery.flot.js"></script>
+    <script src="js/jquery.flot.navigate.js"></script>
+    <script src="js/core.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-	<script src="js/core.js"></script>
-    <script src="bower_components/flot/jquery.flot.js"></script>
-    <script src="bower_components/flot/jquery.flot.navigate.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
 </body>
 
 </html>
