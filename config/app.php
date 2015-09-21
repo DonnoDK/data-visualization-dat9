@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost/data-visualization-dat9/',
+    'url' => 'http://localhost/dat9/data-visualization-dat9/',
 
     /*
     |--------------------------------------------------------------------------
