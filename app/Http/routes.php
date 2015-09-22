@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'API@index');
+Route::get('/Api/eeg/Push', 'EEG@Push');
