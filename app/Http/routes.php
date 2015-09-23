@@ -14,5 +14,5 @@
 Route::get('/', 'API@index');
 Route::get('/Api/Eeg/Push', 'EEG@Push');
 Route::get('/Api/test/create', function(){
-	return 1;
+	return 2;
 });
