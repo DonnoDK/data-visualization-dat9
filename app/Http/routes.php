@@ -19,5 +19,5 @@ Route::get('/Api/Test/create/{name}', function($name){
 	$testPerson = App\testPerson::firstOrCreate(['name' => $name]);
 	$testPerson->test_case()->save($testCase);
 	$testPerson->push();
-	var_dump($testPerson);
+	return $testCase->id;
 });
