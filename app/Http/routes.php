@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'API@index');
-Route::get('/Api/Eeg/Push', 'EEG@Push');
-Route::get('/Api/test/create', function(){
+Route::get('/API/EEG/Push', 'EEG@Push');
+Route::get('/API/TEST/create', function(){
 	return 2;
 });
