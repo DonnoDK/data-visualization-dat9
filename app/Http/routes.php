@@ -12,7 +12,10 @@
 */
 
 Route::get('/', 'API@index');
-Route::get('/API/EEG/Push', 'EEG@Push');
+Route::get('/Api/Eeg/push', function(){
+	$fileContents = Storage::get("/data/eeg-data.json");
+	var_dump($fileContents);
+});
 Route::get('/Api/Test/create/{name}', function($name){
 	
 	$testCase = new App\test_case();
