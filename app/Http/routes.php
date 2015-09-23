@@ -14,3 +14,4 @@
 Route::get('/', 'API@index');
 Route::get('/Api/eeg/Push', 'EEG@Push');
 Route::get('/Api/eeg/Push/{$channel}', 'EEG@Push');
+Route::get('/Api/eeg/Push/penis', 'EEG@Push');
