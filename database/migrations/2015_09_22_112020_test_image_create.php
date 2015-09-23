@@ -18,6 +18,7 @@ class TestImageCreate extends Migration
             $table->string('image_path');
             $table->double('valence', 15, 2);
             $table->string('image_type');
+            $table->timestamps();
         });
     }
 

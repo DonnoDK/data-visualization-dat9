@@ -15,9 +15,10 @@ class GsrReadingCreate extends Migration
         Schema::create('gsr_reading', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('test_case')->unsigned();
+            $table->integer('test_case_id')->unsigned();
             $table->double('value', 15, 5);
             $table->integer('timestamp');
+            $table->timestamps();
         });
     }
 

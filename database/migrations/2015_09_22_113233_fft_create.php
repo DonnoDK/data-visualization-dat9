@@ -15,7 +15,8 @@ class FftCreate extends Migration
         Schema::create('fft', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('eeg_reading')->unsigned();
+            $table->integer('eeg_reading_id')->unsigned();
+            $table->timestamps();
         });
     }
 

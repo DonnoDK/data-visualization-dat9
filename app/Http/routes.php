@@ -13,6 +13,11 @@
 
 Route::get('/', 'API@index');
 Route::get('/API/EEG/Push', 'EEG@Push');
-Route::get('/API/TEST/create', function(){
-	return 2;
+Route::get('/Api/Test/create/{name}', function($name){
+	
+	$testCase = new App\test_case();
+	$testPerson = App\testPerson::firstOrCreate(['name' => $name]);
+	$testPerson->test_case()->save($testCase);
+	$testPerson->push();
+	var_dump($testPerson);
 });

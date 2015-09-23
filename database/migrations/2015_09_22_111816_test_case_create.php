@@ -15,6 +15,7 @@ class TestCaseCreate extends Migration
         Schema::create('test_case', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('test_person_id')->unsigned();
             $table->timestamps();
         });
     }

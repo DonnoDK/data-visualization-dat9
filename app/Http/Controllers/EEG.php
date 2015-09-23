@@ -20,7 +20,8 @@ class EEG extends Controller
     }
 
     public function Push(){
-        $fileContents = Storage::get('data/eeg-data.json');
-        echo $fileContents;
+        $fileContents = Storage::get("/data/eeg-data.json");
+
+        
     }
 }

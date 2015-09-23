@@ -15,10 +15,11 @@ class FftBandDataCreate extends Migration
         Schema::create('fft_band_data', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('fft')->unsigned();
-            $table->integer('band')->unsigned();
+            $table->integer('fft_id')->unsigned();
+            $table->integer('band_id')->unsigned();
             $table->double('value', 15, 2);
             $table->integer('algorithm_type');
+            $table->timestamps();
         });
     }
 

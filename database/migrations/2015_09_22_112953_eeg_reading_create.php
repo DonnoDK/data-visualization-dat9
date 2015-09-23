@@ -15,10 +15,11 @@ class EegReadingCreate extends Migration
         Schema::create('eeg_reading', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('channel')->unsigned();
-            $table->integer('test_case')->unsigned();
+            $table->integer('channel_id')->unsigned();
+            $table->integer('test_case_id')->unsigned();
             $table->double('value', 15, 5);
             $table->integer('timestamp');
+            $table->timestamps();
         });
     }
 

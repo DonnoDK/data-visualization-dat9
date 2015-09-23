@@ -15,12 +15,13 @@ class TestDataCreate extends Migration
         Schema::create('test_data', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('test_person')->unsigned();
-            $table->integer('test_case')->unsigned();
-            $table->integer('test_image')->unsigned();
+            $table->integer('test_person_id')->unsigned();
+            $table->integer('test_case_id')->unsigned();
+            $table->integer('test_image_id')->unsigned();
             $table->integer('valence');
             $table->integer('timestamp_start');
             $table->integer('timestamp_end');
+            $table->timestamps();
         });
 
     }

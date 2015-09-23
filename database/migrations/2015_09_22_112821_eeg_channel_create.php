@@ -16,6 +16,7 @@ class EegChannelCreate extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
+            $table->timestamps();
         });
     }
 

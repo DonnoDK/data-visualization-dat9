@@ -21,38 +21,41 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
     public function up()
     {
 
-
+        Schema::table('test_case', function($table)
+        {
+            $table->foreign('test_person_id')->references('id')->on('test_person');
+        });
         Schema::table('test_data', function($table)
         {
-            $table->foreign('test_person')->references('id')->on('test_person');
-            $table->foreign('test_case')->references('id')->on('test_case');
-            $table->foreign('test_image')->references('id')->on('test_image');
+            $table->foreign('test_person_id')->references('id')->on('test_person');
+            $table->foreign('test_case_id')->references('id')->on('test_case');
+            $table->foreign('test_image_id')->references('id')->on('test_image');
         });
         Schema::table('eeg_reading', function($table)
         {
-            $table->foreign('channel')->references('id')->on('eeg_channel');
-            $table->foreign('test_case')->references('id')->on('test_case');
+            $table->foreign('channel_id')->references('id')->on('eeg_channel');
+            $table->foreign('test_case_id')->references('id')->on('test_case');
         });
         
         Schema::table('gsr_reading', function($table)
         {
-            $table->foreign('test_case')->references('id')->on('test_case');
+            $table->foreign('test_case_id')->references('id')->on('test_case');
         });
 
         Schema::table('fft', function($table)
         {
-            $table->foreign('eeg_reading')->references('id')->on('eeg_reading');
+            $table->foreign('eeg_reading_id')->references('id')->on('eeg_reading');
         });
 
         Schema::table('fft_data', function($table)
         {
-            $table->foreign('fft')->references('id')->on('fft');
+            $table->foreign('fft_id')->references('id')->on('fft');
         });
 
         Schema::table('fft_band_data', function($table)
         {
-            $table->foreign('fft')->references('id')->on('fft');
-            $table->foreign('band')->references('id')->on('fft_band');
+            $table->foreign('fft_id')->references('id')->on('fft');
+            $table->foreign('band_id')->references('id')->on('fft_band');
         });
     }
 
@@ -63,6 +66,12 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
      */
     public function down()
     {
+
+        Schema::table('test_case', function($table)
+        {
+            $table->dropForeign('test_case_test_person_foreign');
+        });
+
         Schema::table('test_data', function($table)
         {
             $table->dropForeign('test_data_test_person_foreign');
