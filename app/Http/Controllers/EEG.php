@@ -19,6 +19,6 @@ class EEG extends Controller
     }
 
     public function Push(){
-        return "Hej push";
+        echo storage_path();
     }
 }
