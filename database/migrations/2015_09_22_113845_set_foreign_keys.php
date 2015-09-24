@@ -69,41 +69,41 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
 
         Schema::table('test_case', function($table)
         {
-            $table->dropForeign('test_case_test_person_foreign');
+            $table->dropForeign('test_case_test_person_id_foreign');
         });
 
         Schema::table('test_data', function($table)
         {
-            $table->dropForeign('test_data_test_person_foreign');
-            $table->dropForeign('test_data_test_case_foreign');
-            $table->dropForeign('test_data_test_image_foreign');
+            $table->dropForeign('test_data_test_person_id_foreign');
+            $table->dropForeign('test_data_test_case_id_foreign');
+            $table->dropForeign('test_data_test_image_id_foreign');
         });
 
         Schema::table('eeg_reading', function($table)
         {
-            $table->dropForeign('eeg_reading_channel_foreign');
-            $table->dropForeign('eeg_reading_test_case_foreign');
+            $table->dropForeign('eeg_reading_channel_id_foreign');
+            $table->dropForeign('eeg_reading_test_case_id_foreign');
         });   
 
 
         Schema::table('gsr_reading', function($table)
         {
-            $table->dropForeign('gsr_reading_test_case_foreign');
+            $table->dropForeign('gsr_reading_test_case_id_foreign');
         });     
 
         Schema::table('fft', function($table)
         {
-            $table->dropForeign('fft_eeg_reading_foreign');
+            $table->dropForeign('fft_eeg_reading_id_foreign');
         });   
 
         Schema::table('fft_data', function($table)
         {
-            $table->dropForeign('fft_data_fft_foreign');
+            $table->dropForeign('fft_data_fft_id_foreign');
         });    
         Schema::table('fft_band_data', function($table)
         {
-            $table->dropForeign('fft_band_data_fft_foreign');
-            $table->dropForeign('fft_band_data_band_foreign');
+            $table->dropForeign('fft_band_data_fft_id_foreign');
+            $table->dropForeign('fft_band_data_band_id_foreign');
         });                  
     }
 }
