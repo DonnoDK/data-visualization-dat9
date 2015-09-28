@@ -16,7 +16,6 @@ class FftCreate extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('eeg_reading_id')->unsigned();
-            $table->timestamps();
         });
     }
 

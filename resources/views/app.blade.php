@@ -53,51 +53,119 @@
 
     <!-- Page Content -->
     <div class="container-fluid" style="margin: 10px; overflow-x: hidden;">
-
-        <div class="row" id="Content" style="">
-            <div class="row">
+            <div class="row-fluid">
                 <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>EEG data
-                                    <div class="pull-right">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                                Actions
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right" role="menu">
-                                                <li>
-                                                    <a href="#" id="fft-start-poll">Start Polling(60s)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" id="fft-force">Force Update</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                    <div class="col-lg-10">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i>EEG data
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                            Actions
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li>
+                                                <a href="#" id="fft-start-poll">Start Polling(60s)</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="fft-force">Force Update</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body" id="chartbody">
-                                    <div id="eeg-chart" style="width:800px;height:250px;"></div>
-                                </div>
-                            <!-- /.panel-body -->
                             </div>
-                        </div>  
-                    </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body" id="chartbody">
+                                <div id="eeg-chart" style="width: 100%;height:250px;"></div>
+                            </div>
+                        <!-- /.panel-body -->
+                        </div>
+                    </div>  
+                    <div class="col-lg-2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i>Data Sets
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body" id="chartbody">
+                                <a href="#" id="eeg_filters">Filters </a>
+                                <div>
+                                <table class="table" id="eeg_filters_table">
+                                    <tr>
+                                        <td>AF3</td>
+                                        <td><input type="checkbox" name="AF3" value="4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>AF4</td>
+                                        <td><input type="checkbox" name="AF4" value="17"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FC5</td>
+                                        <td><input type="checkbox" name="FC5" value="7"></td>
+                                    </tr>                                        
+                                    <tr>
+                                        <td>FC6</td>
+                                        <td><input type="checkbox" name="FC6" value="14"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>F3</td>
+                                        <td><input type="checkbox" name="F3" value="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>F4</td>
+                                        <td><input type="checkbox" name="F4" value="15"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>F7</td>
+                                        <td><input type="checkbox" name="F7" value="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>F8</td>
+                                        <td><input type="checkbox" name="F8" value="16"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>T7</td>
+                                        <td><input type="checkbox" name="T7" value="8"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>T8</td>
+                                        <td><input type="checkbox" name="T8" value="13"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>P7</td>
+                                        <td><input type="checkbox" name="P7" value="9"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>P8</td>
+                                        <td><input type="checkbox" name="P8" value="12"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>O1</td>
+                                        <td><input type="checkbox" name="O1" value="10"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>O2</td>
+                                        <td><input type="checkbox" name="O2" value="11"></td>
+                                    </tr>
+                                </table>
+                                </div>
+                            </div>
+                        <!-- /.panel-body -->
+                        </div>
+                    </div>                         
                 </div>
             </div>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i>GSR
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" id="chartbody">
-                            <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                        <div class="panel-body">
+                            <div id="gsr-chart" style="width: 100%;height:250px;"></div>
                         </div>
                     <!-- /.panel-body -->
                     </div>
@@ -127,9 +195,6 @@
                     </div>
                 </div>    
             </div>
-        </div>
-        <!-- /.row -->
-
     </div>
     <!-- /.container -->
 

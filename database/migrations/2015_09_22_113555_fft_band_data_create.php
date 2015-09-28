@@ -19,7 +19,6 @@ class FftBandDataCreate extends Migration
             $table->integer('band_id')->unsigned();
             $table->double('value', 15, 2);
             $table->integer('algorithm_type');
-            $table->timestamps();
         });
     }
 

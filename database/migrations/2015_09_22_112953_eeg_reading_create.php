@@ -19,7 +19,6 @@ class EegReadingCreate extends Migration
             $table->integer('test_case_id')->unsigned();
             $table->double('value', 15, 5);
             $table->integer('timestamp');
-            $table->timestamps();
         });
     }
 

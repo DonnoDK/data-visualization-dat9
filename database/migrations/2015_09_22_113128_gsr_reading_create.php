@@ -16,16 +16,15 @@ class GsrReadingCreate extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('test_case_id')->unsigned();
-            $table->double('value', 15, 5);
+            $table->integer('value');
             $table->integer('timestamp');
-            $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return voide
      */
     public function down()
     {

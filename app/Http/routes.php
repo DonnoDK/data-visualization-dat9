@@ -12,6 +12,28 @@
 */
 
 Route::get('/', 'API@index');
+Route::get('/Api/Eeg/get/{testcase_id}/{channel_id}', function($testCaseId, $channel_id){
+
+	$eeg_data = App\EegReading::with(array('testCase', 'channel'))->where(array('channel_id' => $channel_id, 'test_case_id' => $testCaseId))->get();
+
+
+	$return_json = array('label'=> $eeg_data[0]->channel->name, 'data' => array());
+	foreach($eeg_data as $reading){
+		array_push($return_json['data'], array($reading->timestamp, $reading->value));
+	}
+
+	return response()->json($return_json);
+});
+
+Route::get('/Api/Gsr/get/{test_case_id}', function($testCaseId){
+	$gsr_data = App\GsrReading::where('test_case_id', $testCaseId)->limit(10)->get();
+	
+	$return_json = array('label'=> 'GSR', 'data' => array());
+	foreach($gsr_data as $reading){
+		array_push($return_json['data'], array($reading->timestamp, $reading->value));
+	}
+	return response()->json($return_json);
+});
 Route::get('/Api/Eeg/push/{testcase_id}', function($testCaseId){
 	$fileContents = Storage::get("/data/eeg_data.json");
 
@@ -25,19 +47,14 @@ Route::get('/Api/Eeg/push/{testcase_id}', function($testCaseId){
 	foreach($json as $entry){
 		foreach($entry as $channel){
 			$c = App\EegChannel::firstOrCreate(['name' => $channel['header']]);
-
+			$headerRows = array();
+			$i = 0;
 			foreach($channel['rawData'] as $value){
-				$eegReading = App\EegReading::create(
-					[
-						'test_case_id' => $testCaseId,
-						'channel_id'	=> $c->id,
-						'value' 	=> $value['rawData']
-					]
-				);
-				
-				$eegReading->push();
-
+				array_push($headerRows, array('test_case_id' => $testCaseId, 'channel_id' => $c->id, 'value' => $value['rawData'], 'timestamp' =>$i ));
+				$i++;
 			}
+
+			DB::table('eeg_reading')->insert($headerRows);
 		
 		}
 
@@ -68,6 +85,36 @@ Route::get('/Api/Test/create/{name}', function($name){
 	return $testCase->id . " appended to user " . $testPerson->name . ' with id ' . $testPerson->id;
 });
 
-Route::get('Api/Gsr/push/{test_case_id}', function(){
-	return "Give me fucking test data Brian";
+Route::get('Api/Gsr/push/{test_case_id}', function($testCaseId){
+	$fileContents = Storage::get("/data/gsr_data.json");
+
+	//$fileContents;
+	$json = json_decode($fileContents, true);
+	$msc=microtime(true);
+
+/*
+	foreach($entry as $channel){
+		$c = App\EegChannel::firstOrCreate(['name' => $channel['header']]);
+		$headerRows = array();
+		$i = 0;
+		foreach($channel['rawData'] as $value){
+			array_push($headerRows, array('test_case_id' => $testCaseId, 'channel_id' => $c->id, 'value' => $value['rawData'], 'timestamp' =>$i ));
+			$i++;
+		}
+
+		DB::table('eeg_reading')->insert($headerRows);
+	
+	}
+*/
+	$gsr_data = array();
+	foreach($json['data'] as $entry){
+		array_push($gsr_data, array('timestamp' => $entry[0], 'value' => $entry[1], 'test_case_id' => $testCaseId));
+	}
+
+	DB::table('gsr_reading')->insert($gsr_data);
+
+	$msc=microtime(true)-$msc;
+
+	echo $msc.' seconds'; // in seconds
+	echo ($msc*1000).' milliseconds'; // in millseconds
 });

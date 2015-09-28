@@ -16,7 +16,6 @@ class FftBandCreate extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
         });
     }
 

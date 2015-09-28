@@ -21,7 +21,6 @@ class TestDataCreate extends Migration
             $table->integer('valence');
             $table->integer('timestamp_start');
             $table->integer('timestamp_end');
-            $table->timestamps();
         });
 
     }

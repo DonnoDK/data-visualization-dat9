@@ -17,7 +17,6 @@ class FftDataCreate extends Migration
             $table->increments('id');
             $table->integer('fft_id')->unsigned();
             $table->double('value', 15, 5);
-            $table->timestamps();
         });
     }
 

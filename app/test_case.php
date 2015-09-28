@@ -11,4 +11,12 @@ class test_case extends Model
     public function testPerson(){
     	return $this->belongsTo('App\testPerson');
     }
+
+    public function eeg_reading(){
+    	return $this->hasMany('App\EegReading');
+    }
+
+    public function gsr_reading(){
+    	return $this->hasMany('App\GsrReading');
+    }
 }

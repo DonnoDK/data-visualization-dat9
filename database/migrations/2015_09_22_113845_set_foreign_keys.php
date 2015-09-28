@@ -28,18 +28,18 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
         Schema::table('test_data', function($table)
         {
             $table->foreign('test_person_id')->references('id')->on('test_person');
-            $table->foreign('test_case_id')->references('id')->on('test_case');
+            $table->foreign('test_case_id')->references('id')->on('test_case')->onDelete('cascade');;
             $table->foreign('test_image_id')->references('id')->on('test_image');
         });
         Schema::table('eeg_reading', function($table)
         {
             $table->foreign('channel_id')->references('id')->on('eeg_channel');
-            $table->foreign('test_case_id')->references('id')->on('test_case');
+            $table->foreign('test_case_id')->references('id')->on('test_case')->onDelete('cascade');;
         });
         
         Schema::table('gsr_reading', function($table)
         {
-            $table->foreign('test_case_id')->references('id')->on('test_case');
+            $table->foreign('test_case_id')->references('id')->on('test_case')->onDelete('cascade');;
         });
 
         Schema::table('fft', function($table)
