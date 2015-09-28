@@ -67,3 +67,7 @@ Route::get('/Api/Test/create/{name}', function($name){
 	$testPerson->push();
 	return $testCase->id . " appended to user " . $testPerson->name . ' with id ' . $testPerson->id;
 });
+
+Route::get('Api/Gsr/push/{test_case_id}', function(){
+	return "Give me fucking test data Brian";
+});
