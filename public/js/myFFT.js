@@ -30,8 +30,6 @@ function computeFFT(testCaseId, channelId, point)
 		        series: { lines: { show: true }, shadowSize: 0 }
 		    };
 
-		    console.log(powerSampling);
-
 			//Display data
 
 			var fftEl = $("#fft-chart");
