@@ -18,22 +18,32 @@ function computeFFT(testCaseId, channelId, point)
 
 			//Compute fft
 			var fft = myFFT(response.data, SamplingFrequency);
+			var powerSampling = [];
+
+			//Format
+			for (var i = 0; i < (isDummyData ? SamplingFrequency / 2 : SamplingFrequency); i++)
+			{
+				powerSampling[i] = [i, fft.FrequencyPowerSampling[i]];
+			}
 
 			var options = {
-		        series: { lines: { show: true }, shadowSize: 0 },
+		        series: { lines: { show: true }, shadowSize: 0 }
+		        /*
 		        xaxis: { zoomRange: null, panRange: [0, response.data.length + 100] },
-		        yaxis: { zoomRange: null, panRange: [0, Array.max(response.data) + 10] },
-		        zoom: {
+		        yaxis: { zoomRange: null, panRange: [-0.5, Array.max(response.data) + 10] },*/
+		        /*zoom: {
 		            interactive: true
 		        },
 		        pan: {
 		            interactive: true
-		        }
+		        }*/
 		    };
 
 			//Display data
 			var fftEl = $("#fft-chart");
-			//$.plot(fftEl, fft.FrequencyPowerSampling, options);
+			console.log(powerSampling[0]);
+			$.plot(fftEl, {data:powerSampling, label:"penis"}, options);
+
 		}
 	});
 }
@@ -53,13 +63,13 @@ function myFFT(samples, sampleFrequency)
 		var magnitude = Math.sqrt(Math.pow(c_value.real, 2) + Math.pow(c_value.imag, 2));
 		obj.FrequencyPowerSampling[i] = magnitude / (Math.sqrt(n) / 2);
 	});
-	
+	/*
 	var str = "";
 	for (var i = 0; i < obj.FrequencyPowerSampling.length / 2; i++)
 	{
 		str += i * sampleFrequency / obj.FrequencyPowerSampling.length + "\t" + obj.FrequencyPowerSampling[i].toString().replace("e", "E") + "\n";
 	}
-	console.log(str);
+	console.log(str);*/
 
 	return obj;
 }
