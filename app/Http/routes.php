@@ -25,8 +25,23 @@ Route::get('/Api/Eeg/get/{testcase_id}/{channel_id}', function($testCaseId, $cha
 	return response()->json($return_json);
 });
 
+Route::get('Api/Eeg/getPoint/{testcase_id}/{channel_id}/{point_id}', function($testCaseId, $channelId, $pointId){
+	$eeg_data = App\EegReading::with(array('testCase', 'channel'))->
+								where(array('channel_id' => $channelId, 'test_case_id' => $testCaseId))->
+								offset($pointId)->
+								limit(256)->
+								get();
+
+	$json = array('data' => array());
+	foreach($eeg_data as $reading){
+		array_push($json['data'], $reading->timestamp . ":" . $reading->value); 
+	}	
+
+	return response()->json($json);
+});
+
 Route::get('/Api/Gsr/get/{test_case_id}', function($testCaseId){
-	$gsr_data = App\GsrReading::where('test_case_id', $testCaseId)->limit(10)->get();
+	$gsr_data = App\GsrReading::where('test_case_id', $testCaseId)->get();
 	
 	$return_json = array('label'=> 'GSR', 'data' => array());
 	foreach($gsr_data as $reading){

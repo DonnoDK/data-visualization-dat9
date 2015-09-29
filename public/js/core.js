@@ -89,7 +89,6 @@ $(document).ready(function () {
 
 	function plotGSR(){
 		$.ajax({
-	        //This will retrieve the contents of the folder if the folder is configured as 'browsable'
 	        url: "Api/Gsr/get/1/",
 	        dataType: "json",
 	        success: function (response) {
