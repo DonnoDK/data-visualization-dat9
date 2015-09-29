@@ -67,22 +67,14 @@ $(document).ready(function () {
 		});
 
 	    var options = {
-	        series: { 
-	        	lines: { show: true }, 
-	        	points: { show: true }, 
-	        	grid: {
-					hoverable: true,
-					clickable: true
-				}
-	        },
+	    	series: {lines: {show: true }, shadowSize: 0 },
 	        xaxis: { zoomRange: null, panRange: [0, maxX + 100] },
 	        yaxis: { zoomRange: null, panRange: [-10, maxY + 10] },
-	        zoom: {
-	            interactive: true
-	        },
-	        pan: {
-	            interactive: true
-	        }
+	    	points: {show: true },
+	    	lines: { show: true },
+	    	zoom: { interactive: true },
+	        pan: { interactive: true }, 
+			grid: { hoverable: true, clickable: true }
 	    };
 	   var el = $("#eeg-chart");
 	   $.plot(el, data, options);
@@ -114,14 +106,18 @@ $(document).ready(function () {
 		            interactive: true
 		        }
 		    };
-		   var el = $("#gsr-chart");
+		   	var el = $("#gsr-chart");
 		   
-		   $.plot(el, [response], options);
+		    $.plot(el, [response], options);
 		    
 	    	}
 		});
 	}
-	$("#eeg-chart").bind("plothover", function (event, pos, item) {
-		console.log("Hover");
+
+	//Used to identify id's in our routes.
+	var channels = {"AF3": 4, "AF4": 17, "FC5": 7, "FC6": 14, "F3": 6, "F4": 15 , "F7": 5, "F8": 16, "T7": 8, "T8": 13, "P7": 9, "P8": 12, "O1": 10, "O2": 11 };
+	
+	$("#eeg-chart").bind("plotclick", function (event, pos, item) {
+		//channels[item.series.label]
 	});
 });
