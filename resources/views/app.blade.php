@@ -61,6 +61,9 @@
                             <div class="panel-heading">
                                 <i class="fa fa-bar-chart-o fa-fw"></i>EEG data
                                 <div class="pull-right">
+                                    <div type="button" class="btn btn-default btn-xs" id="fftBtn">
+                                        Compute FFT
+                                    </div>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                                             Actions
@@ -178,7 +181,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body" id="chartbody">
-                            <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                            <div id="fft-chart" style="width:800px;height:250px;"></div>
                         </div>
                     <!-- /.panel-body -->
                     </div>
@@ -205,6 +208,9 @@
     <script src="js/jquery.flot.js"></script>
     <script src="js/jquery.flot.navigate.js"></script>
     <script src="js/core.js"></script>
+    <script src="js/complex_array.js"></script>
+    <script src="js/fft.js"></script>
+    <script src="js/myFFT.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
