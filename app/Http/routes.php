@@ -118,20 +118,6 @@ Route::get('Api/Gsr/push/{test_case_id}', function($testCaseId){
 	$json = json_decode($fileContents, true);
 	$msc=microtime(true);
 
-/*
-	foreach($entry as $channel){
-		$c = App\EegChannel::firstOrCreate(['name' => $channel['header']]);
-		$headerRows = array();
-		$i = 0;
-		foreach($channel['rawData'] as $value){
-			array_push($headerRows, array('test_case_id' => $testCaseId, 'channel_id' => $c->id, 'value' => $value['rawData'], 'timestamp' =>$i ));
-			$i++;
-		}
-
-		DB::table('eeg_reading')->insert($headerRows);
-	
-	}
-*/
 	$gsr_data = array();
 	foreach($json['data'] as $entry){
 		array_push($gsr_data, array('timestamp' => $entry[0], 'value' => $entry[1], 'test_case_id' => $testCaseId));

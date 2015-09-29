@@ -41,22 +41,6 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
         {
             $table->foreign('test_case_id')->references('id')->on('test_case')->onDelete('cascade');;
         });
-
-        Schema::table('fft', function($table)
-        {
-            $table->foreign('eeg_reading_id')->references('id')->on('eeg_reading');
-        });
-
-        Schema::table('fft_data', function($table)
-        {
-            $table->foreign('fft_id')->references('id')->on('fft');
-        });
-
-        Schema::table('fft_band_data', function($table)
-        {
-            $table->foreign('fft_id')->references('id')->on('fft');
-            $table->foreign('band_id')->references('id')->on('fft_band');
-        });
     }
 
     /**
@@ -89,21 +73,6 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
         Schema::table('gsr_reading', function($table)
         {
             $table->dropForeign('gsr_reading_test_case_id_foreign');
-        });     
-
-        Schema::table('fft', function($table)
-        {
-            $table->dropForeign('fft_eeg_reading_id_foreign');
-        });   
-
-        Schema::table('fft_data', function($table)
-        {
-            $table->dropForeign('fft_data_fft_id_foreign');
-        });    
-        Schema::table('fft_band_data', function($table)
-        {
-            $table->dropForeign('fft_band_data_fft_id_foreign');
-            $table->dropForeign('fft_band_data_band_id_foreign');
-        });                  
+        });                      
     }
 }

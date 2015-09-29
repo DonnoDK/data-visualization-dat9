@@ -34,7 +34,7 @@
 			timerId = setInterval(function(){
 				time += 15;
 				//console.log(time);
-			}, 25);
+			}, 15);
 			$(".start").hide();
 			$(".submit").click();
 		})
