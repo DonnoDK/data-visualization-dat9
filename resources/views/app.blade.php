@@ -13,7 +13,8 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" />
 
 </head>
 
@@ -83,6 +84,7 @@
                             <div class="panel-body" id="chartbody">
                                 <div id="eeg-chart" style="width: 100%;height:250px;"></div>
                             </div>
+                            <div id="tooltip" style="position: absolute; border: 1px solid rgb(255, 221, 221); padding: 2px; opacity: 0.8; top: 470px; left: 470px; display: none; background-color: rgb(255, 238, 238);">cos(x) of 3.00 = -0.99</div>
                         <!-- /.panel-body -->
                         </div>
                     </div>  
@@ -92,8 +94,7 @@
                                 <i class="fa fa-bar-chart-o fa-fw"></i>Data Sets
                             </div>
                             <!-- /.panel-heading -->
-                            <div class="panel-body" id="chartbody">
-                                <a href="#" id="eeg_filters">Filters </a>
+                            <div class="panel-body" id="filters_body">
                                 <div>
                                 <table class="table" id="eeg_filters_table">
                                     <tr>
@@ -213,7 +214,15 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/jquery.mCustomScrollbar.min.js"></script>
+    <script src="js/jquery.mousewheel-3.0.6.min.js"></script>
+    <script>
+    (function($){
+        $(window).load(function(){
+            $("#filters_body").mCustomScrollbar();
+        });
+    })(jQuery);
+    </script>
 </body>
 
 </html>
