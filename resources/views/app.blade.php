@@ -213,6 +213,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.mCustomScrollbar.min.js"></script>
     <script src="js/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="js/jquery.flot.axes.js"></script>
     <script>
     (function($){
         $(window).load(function(){

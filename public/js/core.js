@@ -70,7 +70,17 @@ $(document).ready(function () {
 	    	series: {lines: {show: true }, shadowSize: 0 },
 	        xaxis: { show: true, zoomRange: null, panRange: [0, maxX + 100] },
 	        yaxis: { zoomRange: null, panRange: [-10, maxY + 10] },
-	    	points: {show: true },
+	        axisLabels: {
+	            show: true
+	        },
+	        xaxes: [{
+	            axisLabel: 'Readings (128 r/s)',
+	        }],
+	        yaxes: [{
+	            position: 'left',
+	            axisLabel: 'MicroVolts',
+	        }],
+	    	points: {show: false },
 	    	lines: { show: true },
 	    	zoom: { interactive: true },
 	        pan: { interactive: true }, 
@@ -99,8 +109,18 @@ $(document).ready(function () {
 		        series: { lines: { show: true }, shadowSize: 0 },
 		        xaxis: { zoomRange: null, panRange: [0, Array.max(dx) + 100] },
 		        yaxis: { zoomRange: null, panRange: [0, Array.max(dy) + 100] },
+    	        axisLabels: {
+	            	show: true
+		        },
+		        xaxes: [{
+		            axisLabel: 'm/s',
+		        }],
+		        yaxes: [{
+		            position: 'left',
+		            axisLabel: 'Ohm',
+		        }],
 		        zoom: {
-		            interactive: true
+		            interactive: true	
 		        },
 		        pan: {
 		            interactive: true
