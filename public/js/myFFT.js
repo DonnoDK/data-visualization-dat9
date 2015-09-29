@@ -1,9 +1,7 @@
-$("#fftBtn").on('click', computeFFT);
-
-function computeFFT()
+function computeFFT(testCaseId, channelId, point)
 {
 	$.ajax({
-		url: "Api/Eeg/getPoint/1/5/100",
+		url: "Api/Eeg/getPoint/" + testCaseId + "/" + channelId + "/" + point,
 		dataType: "json",
 		success: function(response) {
 			//Determine if dummy data by taking average of 5 samples
