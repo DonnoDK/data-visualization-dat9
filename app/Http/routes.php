@@ -34,7 +34,7 @@ Route::get('Api/Eeg/getPoint/{testcase_id}/{channel_id}/{point_id}', function($t
 
 	$json = array('data' => array());
 	foreach($eeg_data as $reading){
-		array_push($json['data'], $reading->timestamp . ":" . $reading->value); 
+		array_push($json['data'], $reading->value); 
 	}	
 
 	return response()->json($json);
