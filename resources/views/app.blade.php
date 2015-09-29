@@ -13,8 +13,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -37,10 +38,27 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <div id="selected-case" data-selected-person-id="-1" data-selected-person-selected-case="-1" class="nav navbar-nav" title="Currently selected test person">
+                            <img src="images/none.png">
+                            <span> None Selected </span>          
+                        </div>
+                    </li>
+                    <li style="padding-left:60px;">&nbsp;</li>
+                    <li>
                         <a href="#">Dashboard</a>
                     </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Test People <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <?php
+                            foreach($testPersons as $person){
+                                print '<li class="test-persons"><a href="#" data-person-id="'. $person->id .'" data-person-name="'. $person->name .'"><img class="test-person-image" src="images/'. $person->name .'.jpg">'. $person->name .'<span><i> ( '. count($person->test_case) .' )</i></span></a></li>';
+                            }
+                        ?>
+                      </ul>
+                    </li>
                     <li>
-                        <a href="#">Test</a>
+                        <a href="test/">Test</a>
                     </li>
                     <li>   
                         <a href="#" id="version">Last Updated: NA</a>
@@ -51,7 +69,58 @@
         </div>
         <!-- /.container -->
     </nav>
-
+    <div class="container-fluid" id='test-cases-ui'>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img class="test-person-image" src="https://scontent-arn2-1.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/5385_10201055577848636_1890990129_n.jpg?oh=7672a475f9c9b212e95e590a9806b27c&oe=569D8523">
+                        Anders  
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Created at:</td>
+                                    <td id="person-meta-created">29-09-2015</td>
+                                </tr>                              
+                                <tr>
+                                    <td>Name:</td>
+                                    <td id="person-meta-name">Anders</td>
+                                </tr>
+                                <tr>
+                                    <td>Age:</td>
+                                    <td id='person-meta-age'>24</td>
+                                </tr>
+                                <tr style="border-bottom: 0px;">
+                                    <td>Occupation:</td>
+                                    <td id='person-meta-occupation'>Student</td>
+                                </tr>                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Tests
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <th>Date of test:</th>
+                                <th>Duration</th>
+                                <th></th>
+                            </thead>
+                            <tbody id="person-meta-tests">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>                                    
+        </div>
+    </div>
     <!-- Page Content -->
     <div class="container-fluid" style="margin: 10px; overflow-x: hidden;">
             <div class="row-fluid">
@@ -79,7 +148,8 @@
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body" id="chartbody">
-                                <div id="eeg-chart" style="width: 100%;height:250px;"></div>
+                                <div id="eeg-chart" style="width: 100%;height:250px;">
+                                </div>
                             </div>
                             <div id="tooltip" style="position: absolute; border: 1px solid rgb(255, 221, 221); padding: 2px; opacity: 0.8; top: 470px; left: 470px; display: none; background-color: rgb(255, 238, 238);">cos(x) of 3.00 = -0.99</div>
                         <!-- /.panel-body -->

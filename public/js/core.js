@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
 	$("nav a").on("click", function(){
 		$.get("pages/" + $(this).data("content") + ".html", function(response){
 			$("#content").html(response);
@@ -23,7 +24,7 @@ $(document).ready(function () {
 			if(grabData){
 				$.ajax({
 			        //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-			        url: "Api/Eeg/get/1/" + self.val(),
+			        url: "Api/Eeg/get/" + $("#selected-case").data('selected-person-selected-case') + "/" + self.val(),
 			        dataType: "json",
 			        success: function (response) {
 			        	dataSets.push(response);
@@ -94,7 +95,7 @@ $(document).ready(function () {
 
 	function plotGSR(){
 		$.ajax({
-	        url: "Api/Gsr/get/1/",
+	        url: "Api/Gsr/get/" + $("#selected-case").data('selected-person-selected-case'),
 	        dataType: "json",
 	        success: function (response) {
 			var dx = [];
@@ -141,4 +142,54 @@ $(document).ready(function () {
 		//channels[item.series.label]
 		computeFFT(1, channels[item.series.label], item.dataIndex);
 	});
+
+	//$("#test-cases-ui").hide();
+	$("#test-cases-link").on('click', function(){
+		$("#test-cases-ui").slideToggle();
+	});
+	
+	$("#test-cases-ui").hide();
+	$("#selected-case").on('click', function(){
+		if($(this).data('selected-person-id') == -1){
+			alert("You have to select a test person");
+		} else {
+			$("#test-cases-ui").fadeToggle();
+		}
+	});
+
+	$(".test-persons").on('click', function(){
+		var id = $(this).find(">a").data("person-id");
+		var name = $(this).find(">a").data("person-name");
+
+		$("#selected-case").data('selected-person-id', id);
+		$("#selected-case >img").attr("src", "images/" + name + ".jpg");
+		$("#selected-case >span").text(name);
+
+		getPersonData(id);
+	});
+
+	$(document).on('click', '.select-case-btn', function(){
+		$('#selected-case').data('selected-person-selected-case', $(this).data('test-case-id'));
+	});
+
+	function getPersonData(id){
+		$.ajax({
+	        url: "Api/User/get/" + id,
+	        dataType: "json",
+	        success: function (response) {
+	        	//console.log(response);
+	        	$("#person-meta-created").text(response[0].created_at);
+	        	$("#person-meta-name").text(response[0].name);
+	        	$("#person-meta-age").text(response[0].age);
+	        	$("#person-meta-occupation").text(response[0].occupation);
+
+	        	var str = "";
+	        	for(var i = 0; i <  response[0].test_case.length; i++){
+	        		response[0].test_case[i]
+	        		str += "<tr><td>" + response[0].test_case[i].created_at + "</td><td>NA</td><td><a href='#' data-test-case-id='"+ response[0].test_case[i].id +"' class='select-case-btn btn btn-default'>Select Test</a></td>";
+	        	}
+	        	$("#person-meta-tests").html(str);
+	        }
+	    });                                
+	}
 });

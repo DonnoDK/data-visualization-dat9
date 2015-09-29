@@ -11,7 +11,11 @@
 |
 */
 
-Route::get('/', 'API@index');
+Route::get('/', function(){
+	$testPersons = App\testPerson::with('test_case')->get();
+
+	return view('app')->with(array('testPersons' => $testPersons));
+});
 Route::get('/Api/Eeg/get/{testcase_id}/{channel_id}', function($testCaseId, $channel_id){
 
 	$eeg_data = App\EegReading::with(array('testCase', 'channel'))->where(array('channel_id' => $channel_id, 'test_case_id' => $testCaseId))->get();
@@ -91,10 +95,17 @@ Route::get('/Api/Test/cases', function(){
 	echo "</table>";
 });
 
-Route::get('/Api/Test/create/{name}', function($name){
+Route::get('Api/User/get/{id}', function($id){
+	$testPerson = App\testPerson::with('test_case')->where('id', $id)->get();
+	return response()->json($testPerson);
+});
+
+Route::get('/Api/Test/create/{name}/{age}/{occupation}', function($name, $age, $occupation){
 	
 	$testCase = new App\test_case();
 	$testPerson = App\testPerson::firstOrCreate(['name' => $name]);
+	$testPerson->age = $age;
+	$testPerson->occupation = $occupation;
 	$testPerson->test_case()->save($testCase);
 	$testPerson->push();
 	return $testCase->id . " appended to user " . $testPerson->name . ' with id ' . $testPerson->id;
