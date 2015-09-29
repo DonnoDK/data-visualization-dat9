@@ -175,10 +175,23 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i>FFT For Point
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-default btn-xs" id="btn-fft-graph">
+                                    FFT Graph
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" id="btn-band-abs">
+                                    Freq. Band (Absolute)
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" id="btn-band-rel">
+                                    Freq. Band (Relative)
+                                </button>
+                            </div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body" id="fft">
                             <div id="fft-chart" style="width:100%;height:250px;"></div>
+                            <div id="frequency-band-absolute-chart" style="width:100%;height:250px;"></div>
+                            <div id="frequency-band-relative-chart" style="width:100%;height:250px;"></div>
                         </div>
                     <!-- /.panel-body -->
                     </div>
