@@ -189,8 +189,8 @@
                             <i class="fa fa-bar-chart-o fa-fw"></i>Test Data
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" id="chartbody">
-                            <div id="eeg-chart" style="width:800px;height:250px;"></div>
+                        <div class="panel-body" id="test-data">
+                            <div id="test-data-chart" style="width:100%;height:250px;"></div>
                         </div>
                     <!-- /.panel-body -->
                     </div>

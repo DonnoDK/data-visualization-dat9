@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 	    var options = {
 	    	series: {lines: {show: true }, shadowSize: 0 },
-	        xaxis: { zoomRange: null, panRange: [0, maxX + 100] },
+	        xaxis: { show: true, zoomRange: null, panRange: [0, maxX + 100] },
 	        yaxis: { zoomRange: null, panRange: [-10, maxY + 10] },
 	    	points: {show: true },
 	    	lines: { show: true },

@@ -28,22 +28,14 @@ function computeFFT(testCaseId, channelId, point)
 
 			var options = {
 		        series: { lines: { show: true }, shadowSize: 0 }
-		        /*
-		        xaxis: { zoomRange: null, panRange: [0, response.data.length + 100] },
-		        yaxis: { zoomRange: null, panRange: [-0.5, Array.max(response.data) + 10] },*/
-		        /*zoom: {
-		            interactive: true
-		        },
-		        pan: {
-		            interactive: true
-		        }*/
 		    };
 
-			//Display data
-			var fftEl = $("#fft-chart");
-			console.log(powerSampling[0]);
-			$.plot(fftEl, {data:powerSampling, label:"penis"}, options);
+		    console.log(powerSampling);
 
+			//Display data
+
+			var fftEl = $("#fft-chart");
+			$.plot(fftEl, [{label: "FFT for Point y", data: powerSampling }], options);
 		}
 	});
 }
@@ -63,13 +55,6 @@ function myFFT(samples, sampleFrequency)
 		var magnitude = Math.sqrt(Math.pow(c_value.real, 2) + Math.pow(c_value.imag, 2));
 		obj.FrequencyPowerSampling[i] = magnitude / (Math.sqrt(n) / 2);
 	});
-	/*
-	var str = "";
-	for (var i = 0; i < obj.FrequencyPowerSampling.length / 2; i++)
-	{
-		str += i * sampleFrequency / obj.FrequencyPowerSampling.length + "\t" + obj.FrequencyPowerSampling[i].toString().replace("e", "E") + "\n";
-	}
-	console.log(str);*/
 
 	return obj;
 }
