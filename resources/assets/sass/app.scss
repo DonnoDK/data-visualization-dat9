@@ -1,2 +1,63 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) 
+	@if $inset 
+		-webkit-box-shadow:inset $top $left $blur $color
+		-moz-box-shadow:inset $top $left $blur $color
+		box-shadow:inset $top $left $blur $color
+	@else 
+		-webkit-box-shadow: $top $left $blur $color
+		-moz-box-shadow: $top $left $blur $color
+		box-shadow: $top $left $blur $color
+	
+
+body
+	font-family: 'Open Sans', sans-serif;
+#filters_body
+	height: 280px
+	overflow: hidden
+
+#selected-case
+	height: 50px
+	line-height: 50px
+	border-radius: 3px
+	cursor: pointer
+	img
+		margin-left: 5px
+		width: 34px
+		height: 34px
+		border-radius: 5px
+		border: 1px solid #eee
+	span 
+		color: #808080
+		font-family: verdana
+	&:hover
+		#test-person-meta
+			opacity: 1
+			visibility: visible
+
+.test-person-image
+	width: 30px
+	height: 30px
+	border-radius: 5px
+	border: 1px solid #e8e8e8
+.dropdown-menu
+	a
+		img
+			margin-right: 15px
+		span
+			color: #a8a8a8
+.table 
+	tbody
+		tr
+			td:nth-child(even)
+				font-style:italic
+#test-cases-ui
+	ul
+		list-style: none
+		li
+			>div
+				width: 50px
+				height: 50px
+				background-color: #888
+				border-radius: 5px
+				border: 1 px solid #505050
 
