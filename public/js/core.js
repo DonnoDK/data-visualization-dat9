@@ -8,9 +8,6 @@ $(document).ready(function () {
 	$.get("updated-ts.txt", function(response){
 		$("#version").text(response);
 	});
-	$("#eeg_filters").on('click', function(){
-		$(this).next('div').slideToggle("slow");
-	});
 	var dataSets = [];
 	var dataSetsCache = [];
 	$("#eeg_filters_table input[type=checkbox]").on('click', function(){
@@ -66,13 +63,20 @@ $(document).ready(function () {
 		    maxX = (Array.max(dx) > maxX) ? Array.max(dx) : maxX;
 		    maxY = (Array.max(dy) > maxY) ? Array.max(dy) : maxY;
 
-		    data.push({ data:set.data, label: set.label, lines:{show:true} })
+		    data.push({ data:set.data, label: set.label })
 		});
 
 	    var options = {
-	        series: { lines: { show: true }, shadowSize: 0 },
+	        series: { 
+	        	lines: { show: true }, 
+	        	points: { show: true }, 
+	        	grid: {
+					hoverable: true,
+					clickable: true
+				}
+	        },
 	        xaxis: { zoomRange: null, panRange: [0, maxX + 100] },
-	        yaxis: { zoomRange: null, panRange: [0, maxY + 100] },
+	        yaxis: { zoomRange: null, panRange: [-10, maxY + 10] },
 	        zoom: {
 	            interactive: true
 	        },
@@ -81,7 +85,6 @@ $(document).ready(function () {
 	        }
 	    };
 	   var el = $("#eeg-chart");
-	   
 	   $.plot(el, data, options);
 
 	   plotGSR();
@@ -118,4 +121,7 @@ $(document).ready(function () {
 	    	}
 		});
 	}
+	$("#eeg-chart").bind("plothover", function (event, pos, item) {
+		console.log("Hover");
+	});
 });
