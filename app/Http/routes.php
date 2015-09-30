@@ -44,6 +44,10 @@ Route::get('Api/Eeg/getPoint/{testcase_id}/{channel_id}/{point_id}', function($t
 	return response()->json($json);
 });
 
+Route::get('Api/TestData/get/{ms}', function($ms){
+	return "";
+});
+
 Route::get('/Api/Gsr/get/{test_case_id}', function($testCaseId){
 	$gsr_data = App\GsrReading::where('test_case_id', $testCaseId)->get();
 	
