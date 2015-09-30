@@ -84,10 +84,10 @@ function computeFFT(testCaseId, channelId, point)
 
 				//Sampling frequency
 				var SamplingFrequency = isDummyData ? 360 : 128;
-				var frequencyResolution = (isDummyData ? SamplingFrequency / 2 : SamplingFrequency);
+				var frequencyResolution = SamplingFrequency / 2;
 
 				//Compute fft
-				var fft = myFFT(response.data, SamplingFrequency);
+				var fft = myFFT(response.data);
 				
 				computeFrequencyPowerSampling(fft, frequencyResolution, point);
 				computeBands(fft);
@@ -122,8 +122,8 @@ function computeFrequencyPowerSampling(fft, frequencyResolution, point)
 
 	frequencyPowerSamplingOptions = {
         series: { lines: { show: true }, shadowSize: 0 },
-		xaxis: { min: -5, max: frequencyResolution + 5},
-		yaxis: { min: 0, max: 1},
+		xaxis: { min: -5, max: frequencyResolution + 5, zoomRange: [frequencyResolution, frequencyResolution], panRange: [0,frequencyResolution]},
+		yaxis: { min: 0, max: 10, zoomRange: [1,10000], panRange: [0,null]},
 		axisLabels: {
         	show: true
         },
@@ -134,6 +134,12 @@ function computeFrequencyPowerSampling(fft, frequencyResolution, point)
             position: 'left',
             axisLabel: 'Normalized amplitude',
         }],
+        zoom: {
+            interactive: true	
+        },
+        pan: {
+            interactive: true
+        }
     };
     frequencyPowerSamplingData = [{label: "FFT for Point " + point, data: powerSampling }];
 }
@@ -213,7 +219,7 @@ function computeAbsoluteBandPower(bandFrequencyDef, fft)
 	return bandPower;
 }
 
-function myFFT(samples, sampleFrequency)
+function myFFT(samples)
 {
 	var obj = {}
 
