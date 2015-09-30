@@ -141,6 +141,7 @@ $(document).ready(function () {
 	$("#eeg-chart").bind("plotclick", function (event, pos, item) {
 		//channels[item.series.label]
 		computeFFT(1, channels[item.series.label], item.dataIndex);
+		displayTestData(item.dataIndex);
 	});
 
 	//$("#test-cases-ui").hide();

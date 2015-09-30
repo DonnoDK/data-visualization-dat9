@@ -273,7 +273,10 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body" id="test-data">
-                            <div id="test-data-chart" style="width:100%;height:250px;"></div>
+                            <img id="test-data-img"/>
+                            <p id="test-data-img-type"/>
+                            <p id="test-data-valence"/>
+                            <p id="test-data-valence-control"/>
                         </div>
                     <!-- /.panel-body -->
                     </div>
@@ -290,6 +293,7 @@
     <script src="js/complex_array.js"></script>
     <script src="js/fft.js"></script>
     <script src="js/myFFT.js"></script>
+    <script src="js/testDataDisplay.js"></script>
     <script src="js/core.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
