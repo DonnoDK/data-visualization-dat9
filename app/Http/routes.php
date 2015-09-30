@@ -53,37 +53,78 @@ Route::get('/Api/Gsr/get/{test_case_id}', function($testCaseId){
 	}
 	return response()->json($return_json);
 });
-Route::get('/Api/Eeg/push/{testcase_id}', function($testCaseId){
-	$fileContents = Storage::get("/data/eeg_data.json");
+
+Route::get('Api/TestPersons/get', function(){
+	$persons = App\testPerson::all();
+
+	return response()->json($persons);
+});
+
+Route::get('/Api/TestCase/create/', function(){
+	$fileContents = Storage::get("/data/datacombined.json");
 
 	//$fileContents;
 	$json = json_decode($fileContents, true);
+
+
 	$channels = array();
 	$msc=microtime(true);
 
+	$eeg_root = $json['FusionData']['EEGData'];
+	$gsr_root = $json['FusionData']['GSRData'];
+	$meta_root = $json['FusionData']['MetaData'];
+	
+	/*
+	 * Create a new test case
+	*/
+	$testCase = new App\test_case();
+	$testCase->location = $meta_root['Location'];
+	$testCase->timestamp = $meta_root['Timestamp'];
+	$testCase->description = $meta_root['TestDescription'];
 
+	$testPerson = App\testPerson::firstOrCreate(['name' => $meta_root['TestSubjectName']]);
+	$testPerson->age = $meta_root['TestSubjectAge'];
+	$testPerson->occupation = $meta_root['TestSubjectOccupation'];
+	$testPerson->sex = $meta_root['TestSubjectSex'];
 
-	foreach($json as $entry){
-		foreach($entry as $channel){
-			$c = App\EegChannel::firstOrCreate(['name' => $channel['header']]);
-			$headerRows = array();
-			$i = 0;
-			foreach($channel['rawData'] as $value){
-				array_push($headerRows, array('test_case_id' => $testCaseId, 'channel_id' => $c->id, 'value' => $value['rawData'], 'timestamp' =>$i ));
-				$i++;
+	//Save the test_case to the test person, such that the foreign key constraint is retained
+	$testPerson->test_case()->save($testCase);
+
+	//Save it to the DB
+	$testPerson->push();
+
+	//Get all EEG data
+	if(!empty($eeg_root)){
+		foreach($eeg_root as $channels){
+			foreach($channels as $channel){
+				$c = App\EegChannel::firstOrCreate(['name' => $channel['HEADER']]);
+				$headerRows = array();
+				$i = 0;
+				$cnt += count($channel['data']);
+				foreach($channel['data'] as $reading){
+					array_push($headerRows, array('test_case_id' => $testCase->id, 'channel_id'=>$c->id, 'value'=>$reading, 'timestamp' => $i));
+					$i++;
+				}
+
+				DB::table('eeg_reading')->insert($headerRows);
 			}
-
-			DB::table('eeg_reading')->insert($headerRows);
-		
 		}
-
 	}
-	$msc=microtime(true)-$msc;
 
-	echo $msc.' seconds'; // in seconds
-	echo ($msc*1000).' milliseconds'; // in millseconds
+	//Create the GSR data
+	$gsr_data = array();
+	foreach($gsr_root as $entry){
+		array_push($gsr_data, array('timestamp' => $entry[0], 'value' => $entry[1], 'test_case_id' => $testCase->id));		
+	}
+
+	DB::table('gsr_reading')->insert($gsr_data);
+
+	$msc = microtime(true)-$msc;
+
+	return response()->json(array('success' => true, 'time' => $msc));
 
 });
+
 
 Route::get('/Api/Test/cases', function(){
 	$testCases = App\test_case::with('testPerson')->get();
@@ -100,33 +141,4 @@ Route::get('Api/User/get/{id}', function($id){
 	return response()->json($testPerson);
 });
 
-Route::get('/Api/Test/create/{name}/{age}/{occupation}', function($name, $age, $occupation){
-	
-	$testCase = new App\test_case();
-	$testPerson = App\testPerson::firstOrCreate(['name' => $name]);
-	$testPerson->age = $age;
-	$testPerson->occupation = $occupation;
-	$testPerson->test_case()->save($testCase);
-	$testPerson->push();
-	return $testCase->id . " appended to user " . $testPerson->name . ' with id ' . $testPerson->id;
-});
 
-Route::get('Api/Gsr/push/{test_case_id}', function($testCaseId){
-	$fileContents = Storage::get("/data/gsr_data.json");
-
-	//$fileContents;
-	$json = json_decode($fileContents, true);
-	$msc=microtime(true);
-
-	$gsr_data = array();
-	foreach($json['data'] as $entry){
-		array_push($gsr_data, array('timestamp' => $entry[0], 'value' => $entry[1], 'test_case_id' => $testCaseId));
-	}
-
-	DB::table('gsr_reading')->insert($gsr_data);
-
-	$msc=microtime(true)-$msc;
-
-	echo $msc.' seconds'; // in seconds
-	echo ($msc*1000).' milliseconds'; // in millseconds
-});

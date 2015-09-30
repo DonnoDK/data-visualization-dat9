@@ -250,10 +250,10 @@
                                     FFT Graph
                                 </button>
                                 <button type="button" class="btn btn-default btn-xs" id="btn-band-abs">
-                                    Freq. Band (Absolute)
+                                    Freq. Band (Abs)
                                 </button>
                                 <button type="button" class="btn btn-default btn-xs" id="btn-band-rel">
-                                    Freq. Band (Relative)
+                                    Freq. Band (Rel)
                                 </button>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ class TestPersonCreate extends Migration
             $table->string('name');
             $table->string('occupation');
             $table->integer('age');
-            $table->timestamps();
+            $table->string('sex');
         });
     }
 

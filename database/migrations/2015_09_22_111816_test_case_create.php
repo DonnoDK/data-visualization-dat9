@@ -16,7 +16,9 @@ class TestCaseCreate extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('test_person_id')->unsigned();
-            $table->timestamps();
+            $table->string('location');
+            $table->string('description');
+            $table->string('timestamp');
         });
     }
 

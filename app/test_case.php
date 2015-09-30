@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class test_case extends Model
 {
     protected $table = 'test_case';
+    protected $fillable = array('location', 'timestamp', 'description');
+    public $timestamps = false;
 
     public function testPerson(){
     	return $this->belongsTo('App\testPerson');
