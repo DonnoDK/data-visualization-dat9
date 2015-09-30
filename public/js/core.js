@@ -167,13 +167,18 @@ $(document).ready(function () {
 		$("#selected-case").data('selected-person-id', id);
 		$("#selected-case >img").attr("src", "images/" + name + ".jpg");
 		$("#selected-case >span").text(name);
+		$("#meta-heading > img").attr("src", "images/" + name + ".jpg");
+		$("#meta-heading > span").text(name);
 
 		getPersonData(id);
 	});
 
+	$("#fucking_filters").hide()
 	$(document).on('click', '.select-case-btn', function(){
+		$("#fucking_filters").fadeIn();
 		$('#selected-case').data('selected-person-selected-case', $(this).data('test-case-id'));
 		$("#test-cases-ui").fadeToggle();
+		
 	});
 
 	function getPersonData(id){

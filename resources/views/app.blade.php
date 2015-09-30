@@ -73,9 +73,9 @@
         <div class="row">
             <div class="col-lg-4 col-lg-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img class="test-person-image" src="https://scontent-arn2-1.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/5385_10201055577848636_1890990129_n.jpg?oh=7672a475f9c9b212e95e590a9806b27c&oe=569D8523">
-                        Anders  
+                    <div class="panel-heading" id="meta-heading">
+                        <img class="test-person-image" src="">
+                        <span>NoName</span>  
                     </div>
                     <div class="panel-body">
                         <table class="table">
@@ -158,11 +158,11 @@
                     <div class="col-lg-2">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-bar-chart-o fa-fw"></i>Data Sets
+                                <i class="fa fa-bar-chart-o fa-fw"></i>Filter Channels
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body" id="filters_body">
-                                <div>
+                                <div id="fucking_filters">
                                 <table class="table" id="eeg_filters_table">
                                     <tr>
                                         <td>AF3</td>
@@ -274,9 +274,26 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body" id="test-data">
                             <img id="test-data-img"/>
-                            <p id="test-data-img-type"/>
-                            <p id="test-data-valence"/>
-                            <p id="test-data-valence-control"/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>Image Type:</td>
+                                        <td><span id="test-data-image-type"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Subject Valence:</td>
+                                        <td><span id="test-data-subject-valence"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Control Valence:</td>
+                                        <td><span id="test-data-control-valence"></span></td>
+                                    </tr>                  
+                                    <tr>
+                                        <td>Shown for:</td>
+                                        <td><span id="test-data-shown-for"></span></td>
+                                    </tr>                                                      
+                                </thead>
+                            </table>
                         </div>
                     <!-- /.panel-body -->
                     </div>

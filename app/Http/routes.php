@@ -45,7 +45,8 @@ Route::get('Api/Eeg/getPoint/{testcase_id}/{channel_id}/{point_id}', function($t
 });
 
 Route::get('Api/TestData/get/{ms}', function($ms){
-	return "";
+	$testData = App\TestData::whereRaw('timestamp_start <= ? AND timestamp_end >= ? ', [$ms, $ms])->get();
+	return response()->json($testData);
 });
 
 Route::get('/Api/Gsr/get/{test_case_id}', function($testCaseId){
