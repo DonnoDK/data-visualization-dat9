@@ -16,9 +16,11 @@ $(document).ready(function () {
 		if($(this).is(':checked')){
 			var grabData = true;
 			dataSetsCache.forEach(function(set){
-				if(set.label == $(this).attr('name')){
+				if(set.label == self.attr('name')){
 					grabData = false;
 					dataSets.push(set); //add set to active list
+					console.log("Cache hit, should retrive.");
+					plotEeg();
 				}
 			});
 			if(grabData){
@@ -69,8 +71,8 @@ $(document).ready(function () {
 
 	    var options = {
 	    	series: {lines: {show: true }, shadowSize: 0 },
-	        xaxis: { show: true, zoomRange: null, panRange: [0, maxX + 100] },
-	        yaxis: { zoomRange: null, panRange: [-10, maxY + 10] },
+	        xaxis: { show: true, zoomRange: null, panRange: [0, maxX + 1000] },
+	        yaxis: { zoomRange: null, panRange: [-500, maxY + 500] },
 	        axisLabels: {
 	            show: true
 	        },
@@ -170,6 +172,7 @@ $(document).ready(function () {
 
 	$(document).on('click', '.select-case-btn', function(){
 		$('#selected-case').data('selected-person-selected-case', $(this).data('test-case-id'));
+		$("#test-cases-ui").fadeToggle();
 	});
 
 	function getPersonData(id){

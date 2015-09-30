@@ -21,4 +21,8 @@ class test_case extends Model
     public function gsr_reading(){
     	return $this->hasMany('App\GsrReading');
     }
+
+    public function testData(){
+        return $this->hasOne('App\TestData');
+    }
 }

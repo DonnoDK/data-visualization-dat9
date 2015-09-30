@@ -17,8 +17,10 @@ class TestDataCreate extends Migration
             $table->increments('id');
             $table->integer('test_person_id')->unsigned();
             $table->integer('test_case_id')->unsigned();
-            $table->integer('test_image_id')->unsigned();
-            $table->integer('valence');
+            $table->string('image_path');
+            $table->string('image_type');
+            $table->float('image_control_valence');
+            $table->integer('test_person_valence');
             $table->integer('timestamp_start');
             $table->integer('timestamp_end');
         });

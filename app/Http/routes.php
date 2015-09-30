@@ -95,19 +95,16 @@ Route::get('/Api/TestCase/create/', function(){
 
 	//Get all EEG data
 	if(!empty($eeg_root)){
-		foreach($eeg_root as $channels){
-			foreach($channels as $channel){
-				$c = App\EegChannel::firstOrCreate(['name' => $channel['HEADER']]);
-				$headerRows = array();
-				$i = 0;
-				$cnt += count($channel['data']);
-				foreach($channel['data'] as $reading){
-					array_push($headerRows, array('test_case_id' => $testCase->id, 'channel_id'=>$c->id, 'value'=>$reading, 'timestamp' => $i));
-					$i++;
-				}
-
-				DB::table('eeg_reading')->insert($headerRows);
+		foreach($eeg_root as $channel){
+			$c = App\EegChannel::firstOrCreate(['name' => $channel['HEADER']]);
+			$headerRows = array();
+			$i = 0;
+			foreach($channel['data'] as $reading){
+				array_push($headerRows, array('test_case_id' => $testCase->id, 'channel_id'=>$c->id, 'value'=>$reading, 'timestamp' => $i));
+				$i++;
 			}
+
+			DB::table('eeg_reading')->insert($headerRows);
 		}
 	}
 
@@ -134,6 +131,29 @@ Route::get('/Api/Test/cases', function(){
 		echo "<tr><td>{$case->id}</td><td>{$case->testPerson->name}</td><td>{$case->created_at}</td></tr>";
 	}
 	echo "</table>";
+});
+
+Route::get('Api/TestData/push/{test_case_id}/{person_id}', function($testCaseId, $personId){
+	$fileContents = Storage::get("/data/testData.json");
+
+	//$fileContents;
+	$json = json_decode($fileContents);
+
+	$testDataRows = array();
+	foreach($json as $testImage){
+		array_push($testDataRows, 
+			array(
+				'test_person_id' => $personId, 
+				'test_case_id' => $testCaseId, 
+				'image_path' => $testImage->img,
+				'image_type' => $testImage->image_type,
+				'image_control_valence' => $testImage->control_valence,
+				'test_person_valence' => $testImage->valence,
+				'timestamp_start' => $testImage->time_image_shown,
+				'timestamp_end' => $testImage->time_clicked_next));
+	}
+
+	DB::table('test_data')->insert($testDataRows);
 });
 
 Route::get('Api/User/get/{id}', function($id){

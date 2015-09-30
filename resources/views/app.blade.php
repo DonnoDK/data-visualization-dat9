@@ -166,64 +166,64 @@
                                 <table class="table" id="eeg_filters_table">
                                     <tr>
                                         <td>AF3</td>
-                                        <td><input type="checkbox" name="AF3" value="4"></td>
+                                        <td><input type="checkbox" name="AF3" value="1"></td>
                                     </tr>
                                     <tr>
                                         <td>AF4</td>
-                                        <td><input type="checkbox" name="AF4" value="17"></td>
+                                        <td><input type="checkbox" name="AF4" value="14"></td>
                                     </tr>
                                     <tr>
                                         <td>FC5</td>
-                                        <td><input type="checkbox" name="FC5" value="7"></td>
+                                        <td><input type="checkbox" name="FC5" value="4"></td>
                                     </tr>                                        
                                     <tr>
                                         <td>FC6</td>
-                                        <td><input type="checkbox" name="FC6" value="14"></td>
+                                        <td><input type="checkbox" name="FC6" value="11"></td>
                                     </tr>
                                     <tr>
                                         <td>F3</td>
-                                        <td><input type="checkbox" name="F3" value="6"></td>
+                                        <td><input type="checkbox" name="F3" value="3"></td>
                                     </tr>
                                     <tr>
                                         <td>F4</td>
-                                        <td><input type="checkbox" name="F4" value="15"></td>
+                                        <td><input type="checkbox" name="F4" value="12"></td>
                                     </tr>
                                     <tr>
                                         <td>F7</td>
-                                        <td><input type="checkbox" name="F7" value="5"></td>
+                                        <td><input type="checkbox" name="F7" value="2"></td>
                                     </tr>
                                     <tr>
                                         <td>F8</td>
-                                        <td><input type="checkbox" name="F8" value="16"></td>
+                                        <td><input type="checkbox" name="F8" value="13"></td>
                                     </tr>
                                     <tr>
                                         <td>T7</td>
-                                        <td><input type="checkbox" name="T7" value="8"></td>
+                                        <td><input type="checkbox" name="T7" value="5"></td>
                                     </tr>
                                     <tr>
                                         <td>T8</td>
-                                        <td><input type="checkbox" name="T8" value="13"></td>
+                                        <td><input type="checkbox" name="T8" value="10"></td>
                                     </tr>
                                     <tr>
                                         <td>P7</td>
-                                        <td><input type="checkbox" name="P7" value="9"></td>
+                                        <td><input type="checkbox" name="P7" value="6"></td>
                                     </tr>
                                     <tr>
                                         <td>P8</td>
-                                        <td><input type="checkbox" name="P8" value="12"></td>
+                                        <td><input type="checkbox" name="P8" value="9"></td>
                                     </tr>
                                     <tr>
                                         <td>O1</td>
-                                        <td><input type="checkbox" name="O1" value="10"></td>
+                                        <td><input type="checkbox" name="O1" value="7"></td>
                                     </tr>
                                     <tr>
                                         <td>O2</td>
-                                        <td><input type="checkbox" name="O2" value="11"></td>
+                                        <td><input type="checkbox" name="O2" value="8"></td>
                                     </tr>
                                 </table>
                                 </div>
                             </div>
-                        <!-- /.panel-body -->
+                        <!-- /.panel-body -->   
                         </div>
                     </div>                         
                 </div>

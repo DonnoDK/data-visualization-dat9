@@ -29,7 +29,6 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
         {
             $table->foreign('test_person_id')->references('id')->on('test_person');
             $table->foreign('test_case_id')->references('id')->on('test_case')->onDelete('cascade');;
-            $table->foreign('test_image_id')->references('id')->on('test_image');
         });
         Schema::table('eeg_reading', function($table)
         {
@@ -60,7 +59,6 @@ fft_band_data { id, [f]fft_id, [f]fft_band, value, algorithm_type }
         {
             $table->dropForeign('test_data_test_person_id_foreign');
             $table->dropForeign('test_data_test_case_id_foreign');
-            $table->dropForeign('test_data_test_image_id_foreign');
         });
 
         Schema::table('eeg_reading', function($table)

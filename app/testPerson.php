@@ -13,4 +13,8 @@ class testPerson extends Model
     public function test_case(){
     	return $this->hasMany('App\test_case');
     }
+
+    public function test_data(){
+    	return $this->hasMany('App\TestData');
+    }
 }
