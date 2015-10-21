@@ -17,6 +17,12 @@
 	controlValenceArr[1] = [];
 	controlValenceArr[2] = [];
 	controlValenceArr[3] = [];
+
+	var controlArousalArr = [];
+	controlArousalArr[0] = [];
+	controlArousalArr[1] = [];
+	controlArousalArr[2] = [];
+	controlArousalArr[3] = [];
 	
 	var results = [];
 	var SHOW_IMAGES = 5;
@@ -44,8 +50,8 @@
 		var timeShown = 0;
 		var imageType = "";
 		$(".submit").on("click", function(){
-
-			results.push({"img": $(".image-container > img").attr("src"), "image_type": imageType, "valence": $(".valence-input").val(), "control_valence": $(".image-container > img").data("control-valence"),"time_image_shown": timeShown, "time_clicked_next": time });
+			$(".image-container > img").css("visibility", "hidden");
+			results.push({"img": $(".image-container > img").attr("src"), "image_type": imageType, "valence": $(".valence-input").val(), "control_valence": $(".image-container > img").data("control-valence"), "arousal": $(".arousal-input").val(), "control_arousal": $(".image-container > img").data("control-valence"), "time_image_shown": timeShown, "time_clicked_next": time });
 			$(".submit").attr("disabled", true);
 			$(".submit").addClass("disabled");
 			var id = setInterval(function(){
@@ -60,12 +66,14 @@
 						case 0:
 							imgNum = Math.floor((Math.random() * imageArr[0].length));
 							$(".image-container > img").data("control-valence", controlValenceArr[0][imgNum]);
+							$(".image-container > img").data("control-arousal", controlArousalArr[0][imgNum]);
 							img = "gaped/A/" + imageArr[0][imgNum];
 							numN++;
 							break;
 						case 1:
 							imgNum = Math.floor((Math.random() * imageArr[1].length));
 							$(".image-container > img").data("control-valence", controlValenceArr[1][imgNum]);
+							$(".image-container > img").data("control-arousal", controlArousalArr[1][imgNum]);
 							img = "gaped/H/" + imageArr[1][imgNum];	
 							numN++;
 							break;
@@ -76,6 +84,7 @@
 				} else if(type == "Positive"){
 					imgNum = Math.floor((Math.random() * imageArr[3].length));
 					$(".image-container > img").data("control-valence", controlValenceArr[3][imgNum]);
+					$(".image-container > img").data("control-arousal", controlArousalArr[3][imgNum]);
 					img = "gaped/P/" + imageArr[3][imgNum];
 					numP++;	
 					if(numP == SHOW_IMAGES)
@@ -83,6 +92,7 @@
 				} else if(type == "Neutral") {
 					imgNum = Math.floor((Math.random() * imageArr[2].length));
 					$(".image-container > img").data("control-valence", controlValenceArr[2][imgNum]);
+					$(".image-container > img").data("control-arousal", controlArousalArr[2][imgNum]);
 					img = "gaped/N/" + imageArr[2][imgNum];
 					numNeu++;
 					if(numNeu == SHOW_IMAGES)
@@ -94,11 +104,20 @@
 				}
 				$(".image-container > img").attr("src", img);
 
-				$(".valence-input").val(50);
-				$(".submit").attr("disabled", false);
-				$(".submit").removeClass("disabled");
 				//console.log("Positive: " + numP + " - Negative: " + numN + " - Neutral: " + numNeu);
-				clearInterval(id);
+				var watIdx = setInterval(function(){
+					$(".image-container > img").css("visibility", "visible");
+					$(".valence-input").val(50);
+					$(".arousal-input").val(50);
+					$(".valence-slider").slider('value', 50);
+					$(".arousal-slider").slider('value', 50);
+					$(".arousal-num").text(50);
+					$(".valence-num").text(50);
+					$(".submit").attr("disabled", false);
+					$(".submit").removeClass("disabled");					
+					clearInterval(watIdx);
+					clearInterval(id);
+				}, 300)
 			}, Math.floor(Math.random() * 3000 + 1));
 		})
 
@@ -107,7 +126,7 @@
 			$(".result").fadeIn("fast");
 		});
 
-		$(".slider").slider({
+		$(".valence-slider").slider({
 			range: "min",
 			min: 1,
 			max: 100,
@@ -117,6 +136,16 @@
 				$(".valence-input").val(ui.value);
 			}
 		});
+		$(".arousal-slider").slider({
+			range: "min",
+			min: 1,
+			max: 100,
+			value: 50,
+			slide: function(event, ui){
+				$(".arousal-num").text(ui.value);
+				$(".arousal-input").val(ui.value);
+			}
+		});		
 	})
 	
 	function populateArray(){
@@ -163,8 +192,10 @@
 	  		var newLines = response.split("\n");
 	  		var first = true;
 	  		newLines.forEach(function(item){
-	  			if(!first)
+	  			if(!first){
+	  				controlArousalArr[0].push(item.split("\t")[2]);
 	  				controlValenceArr[0].push(item.split("\t")[1]);
+	  			}
 	  			else
 	  				first = false;
 	  		});
@@ -175,8 +206,10 @@
 	  		var newLines = response.split("\n");
 	  		var first = true;
 	  		newLines.forEach(function(item){
-	  			if(!first)
+	  			if(!first){
+	  				controlArousalArr[1].push(item.split("\t")[2]);
 	  				controlValenceArr[1].push(item.split("\t")[1]);
+	  			}
 	  			else
 	  				first = false;
 	  		});
@@ -187,8 +220,10 @@
 	  		var newLines = response.split("\n");
 	  		var first = true;
 	  		newLines.forEach(function(item){
-	  			if(!first)
+	  			if(!first){
+	  				controlArousalArr[2].push(item.split("\t")[2]);
 	  				controlValenceArr[2].push(item.split("\t")[1]);
+	  			}
 	  			else
 	  				first = false;
 	  		});
@@ -197,8 +232,10 @@
 	  		var newLines = response.split("\n");
 	  		var first = true;
 	  		newLines.forEach(function(item){
-	  			if(!first)
+	  			if(!first){
+	  				controlArousalArr[3].push(item.split("\t")[2]);
 	  				controlValenceArr[3].push(item.split("\t")[1]);
+	  			}
 	  			else
 	  				first = false;
 	  		});
@@ -302,10 +339,12 @@ button:hover{
 <div class="wrap">
 	<div class="image-container">
 	<button class="start" style="width: 100%;">Start</button>
-		<img src="" width="640" height="480" data-control-valence="0" />
+		<img src="" width="640" height="480" data-control-valence="0" data-control-arousal="0" />
 		<div class="valance-selection" style="display:inline-block;">
 			<div style="margin: 5px 0px 5px 0px;">Valence: <span class="valence-num">50</span><input class="valence-input" type="hidden" maxlength="3" /></div>
-				<div class="slider" style="width: 100%;"></div> 	<button class="submit">Next</button>
+				<div class="valence-slider" style="width: 100%;"></div><br />
+				<div style="margin: 5px 0px 5px 0px;">Arousal: <span class="arousal-num">50</span><input class="arousal-input" type="hidden" maxlength="3" /></div>
+				<div class="arousal-slider" style="width: 100%;"></div> 	<button class="submit">Next</button>
 		</div>
 	</div>
 	<button class="export" style="width: 200px; margin-top: 200px;">Export Data</button>

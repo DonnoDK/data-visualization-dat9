@@ -20,7 +20,9 @@ class TestDataCreate extends Migration
             $table->string('image_path');
             $table->string('image_type');
             $table->float('image_control_valence');
+            $table->float('image_control_arousal');
             $table->integer('test_person_valence');
+            $table->integer('test_person_arousal');
             $table->integer('timestamp_start');
             $table->integer('timestamp_end');
         });
