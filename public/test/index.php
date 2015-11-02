@@ -49,6 +49,7 @@
 	}
 	$( document ).ready(function() {
 		$(".result").hide();
+		$(".valance-selection").hide();
 		$(".start").on("click", function(){
 			var d = new Date();
 			startTime = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
@@ -62,6 +63,7 @@
 		var imageType = "";
 		var timeShown = 0;
 		$(".submit").on("click", function(){
+			$(".valance-selection").slideUp();
 			var d = new Date();  
 			var timeClicked = deltaTime();
 			if(currentActiveSamButton){
@@ -93,6 +95,12 @@
 					$(".submit").removeClass("disabled");					
 					clearInterval(watIdx);
 					clearInterval(id);
+
+					var valSelIdx = setInterval(function(){
+						$(".valance-selection").slideDown();
+						clearInterval(valSelIdx);
+					}, 4000);
+
 				}, 300)
 			}, Math.floor(Math.floor(Math.random()* 1000 * 5)));
 		})
@@ -395,7 +403,7 @@ body {
 			<button class="submit button">Next</button>
 		</div>
 	</div>
-	<button class="export button" style="width: 200px; margin-top: 200px;">Export Data</button>
+	<button class="export button" style="width: 200px; margin-top: 400px;">Export Data</button>
 	<div class="result">
 		<textarea style="width: 100%; height: 300px;"></textarea>
 	</div>
