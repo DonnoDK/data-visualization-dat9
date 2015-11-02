@@ -7,148 +7,131 @@
 	<script src="jquery.min.js"></script>
 	<script type="text/javascript">
 	//All images
-	var imageArr = [];
-	imageArr[0] = [];
-	imageArr[1] = [];
-	imageArr[2] = [];
-	imageArr[3] = [];
-	var controlValenceArr = [];
-	controlValenceArr[0] = [];
-	controlValenceArr[1] = [];
-	controlValenceArr[2] = [];
-	controlValenceArr[3] = [];
 
-	var controlArousalArr = [];
-	controlArousalArr[0] = [];
-	controlArousalArr[1] = [];
-	controlArousalArr[2] = [];
-	controlArousalArr[3] = [];
+	var images = [];
+	images.push({url: "iaps/2981.jpg", arousal: 5.97, valence: 2.76, type: "Negative"});
+	images.push({url: "iaps/3062.jpg", arousal: 5.78, valence: 1.87, type: "Negative"});
+	images.push({url: "iaps/9040.jpg", arousal: 5.82, valence: 1.67, type: "Negative"});
+	images.push({url: "iaps/9183.jpg", arousal: 6.58, valence: 1.69, type: "Negative"});
+	images.push({url: "iaps/9325.jpg", arousal: 6.01, valence: 1.89, type: "Negative"});
+	images.push({url: "iaps/4660.jpg", arousal: 6.58, valence: 7.40, type: "Positive"});
+	images.push({url: "iaps/4680.jpg", arousal: 6.02, valence: 7.25, type: "Positive"});
+	images.push({url: "iaps/5210.jpg", arousal: 4.60, valence: 8.03, type: "Positive"});
+	images.push({url: "iaps/5825.jpg", arousal: 5.46, valence: 8.03, type: "Positive"});
+	images.push({url: "iaps/8492.jpg", arousal: 7.31, valence: 7.21, type: "Positive"});
+	images.push({url: "iaps/6314.jpg", arousal: 4.09, valence: 4.60, type: "Neutral"});
+	images.push({url: "iaps/7484.jpg", arousal: 4.29, valence: 4.99, type: "Neutral"});
+	images.push({url: "iaps/8121.jpg", arousal: 4.63, valence: 4.14, type: "Neutral"});
+	images.push({url: "iaps/8466.jpg", arousal: 4.92, valence: 4.86, type: "Neutral"});
+	images.push({url: "iaps/9171.jpg", arousal: 4.72, valence: 4.01, type: "Neutral"});
+	images.push({url: "iaps/done.png", arousal: 0, valence: 0, type: "NA"});
 	
-	var results = [];
-	var SHOW_IMAGES = 5;
+	
+	
+	
+	var results = {startTime: 0, endTime: 0, time: 0, data: [] };
+	var startTime; 
+	var endTime;
 
-	var numP = 0;
-	var numN = 0;
-	var numNeu = 0;
-
+	var currentImgIndex = 0;
 	var time = 0;	
 	var timerId; 
+	var prevTime; 
+
+	function timeNow(){
+		var d = new Date();
+		var t = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
+		return t;
+	}
+
+	function deltaTime(){
+		return timeNow() - results.startTime;
+	}
 	$( document ).ready(function() {
-		populateArray();
 		$(".result").hide();
 		$(".start").on("click", function(){
-			timerId = setInterval(function(){
-				time += 15;
-				//console.log(time);
-			}, 15);
+			var d = new Date();
+			startTime = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
+			prevTime = startTime;
+			results.startTime = startTime;
 			$(".start").hide();
 			$(".submit").click();
 		})
-
 		
 		var typeS = ["Negative", "Positive", "Neutral"];
-		var timeShown = 0;
 		var imageType = "";
+		var timeShown = 0;
 		$(".submit").on("click", function(){
+			var d = new Date();  
+			var timeClicked = deltaTime();
+			if(currentActiveSamButton){
+				currentActiveSamButton.removeClass("button--active");
+				currentActiveSamButton = null;
+			}
+			if(currentActiveArousalButton){
+				currentActiveArousalButton.removeClass("button--active");
+				currentActiveArousalButton = null;	
+			}
+
+
 			$(".image-container > img").css("visibility", "hidden");
-			results.push({"img": $(".image-container > img").attr("src"), "image_type": imageType, "valence": $(".valence-input").val(), "control_valence": $(".image-container > img").data("control-valence"), "arousal": $(".arousal-input").val(), "control_arousal": $(".image-container > img").data("control-valence"), "time_image_shown": timeShown, "time_clicked_next": time });
+			if(currentImgIndex > 0)
+				results.data.push({"img": $(".image-container > img").attr("src"), "image_type": images[currentImgIndex].type, "valence": $(".valence-input").val(), "control_valence": images[currentImgIndex].valence, "arousal": $(".arousal-input").val(), "control_arousal": images[currentImgIndex].arousal, "time_image_shown": timeShown, "time_clicked_next": timeClicked });
+			
 			$(".submit").attr("disabled", true);
 			$(".submit").addClass("disabled");
 			var id = setInterval(function(){
-				var type = typeS[Math.floor(Math.random() * typeS.length)];
-				imageType = type;
-				timeShown = time;
-				var img = "";
-				var imgNum = 0;
-				if(type == "Negative"){
-					var negativeNum = Math.floor(Math.random() * 2);
-					switch(negativeNum){
-						case 0:
-							imgNum = Math.floor((Math.random() * imageArr[0].length));
-							$(".image-container > img").data("control-valence", controlValenceArr[0][imgNum]);
-							$(".image-container > img").data("control-arousal", controlArousalArr[0][imgNum]);
-							img = "gaped/A/" + imageArr[0][imgNum];
-							numN++;
-							break;
-						case 1:
-							imgNum = Math.floor((Math.random() * imageArr[1].length));
-							$(".image-container > img").data("control-valence", controlValenceArr[1][imgNum]);
-							$(".image-container > img").data("control-arousal", controlArousalArr[1][imgNum]);
-							img = "gaped/H/" + imageArr[1][imgNum];	
-							numN++;
-							break;
-					}
-					if(numN == SHOW_IMAGES)
-						typeS.splice(typeS.indexOf("Negative"), 1);
-
-				} else if(type == "Positive"){
-					imgNum = Math.floor((Math.random() * imageArr[3].length));
-					$(".image-container > img").data("control-valence", controlValenceArr[3][imgNum]);
-					$(".image-container > img").data("control-arousal", controlArousalArr[3][imgNum]);
-					img = "gaped/P/" + imageArr[3][imgNum];
-					numP++;	
-					if(numP == SHOW_IMAGES)
-						typeS.splice(typeS.indexOf("Positive"), 1);
-				} else if(type == "Neutral") {
-					imgNum = Math.floor((Math.random() * imageArr[2].length));
-					$(".image-container > img").data("control-valence", controlValenceArr[2][imgNum]);
-					$(".image-container > img").data("control-arousal", controlArousalArr[2][imgNum]);
-					img = "gaped/N/" + imageArr[2][imgNum];
-					numNeu++;
-					if(numNeu == SHOW_IMAGES)
-						typeS.splice(typeS.indexOf("Neutral"), 1);
-				} else {
-					img = "http://nicolasemple.com/wp-content/uploads/2013/12/well-done.jpg";
-					clearInterval(timerId);
-					$(".submit").hide();
-				}
+				timeShown = deltaTime();
+				var img = images[currentImgIndex].url;
+				
 				$(".image-container > img").attr("src", img);
-
+				currentImgIndex++;
 				//console.log("Positive: " + numP + " - Negative: " + numN + " - Neutral: " + numNeu);
 				var watIdx = setInterval(function(){
 					$(".image-container > img").css("visibility", "visible");
-					$(".valence-input").val(50);
-					$(".arousal-input").val(50);
-					$(".valence-slider").slider('value', 50);
-					$(".arousal-slider").slider('value', 50);
-					$(".arousal-num").text(50);
-					$(".valence-num").text(50);
 					$(".submit").attr("disabled", false);
 					$(".submit").removeClass("disabled");					
 					clearInterval(watIdx);
 					clearInterval(id);
 				}, 300)
-			}, Math.floor(Math.random() * 3000 + 1));
+			}, Math.floor(Math.floor(Math.random()* 1000 * 5)));
 		})
 
 		$(".export").on("click", function(){
+			var d =  new Date();
+			results.time = time;
+			results.endTime = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());  
 			$(".result > textarea").text((JSON.stringify(results)));
 			$(".result").fadeIn("fast");
 		});
 
-		$(".valence-slider").slider({
-			range: "min",
-			min: 1,
-			max: 100,
-			value: 50,
-			slide: function(event, ui){
-				$(".valence-num").text(ui.value);
-				$(".valence-input").val(ui.value);
+		var currentActiveSamButton;
+		$(".samvalencebuttons button").on("click", function(){
+			$(this).addClass("button--active");
+			$(".valence-input").val($(this).val());	
+			if(currentActiveSamButton){
+				currentActiveSamButton.removeClass("button--active");
+				currentActiveSamButton = $(this);
+			} else {
+				currentActiveSamButton = $(this);
 			}
 		});
-		$(".arousal-slider").slider({
-			range: "min",
-			min: 1,
-			max: 100,
-			value: 50,
-			slide: function(event, ui){
-				$(".arousal-num").text(ui.value);
-				$(".arousal-input").val(ui.value);
+
+		var currentActiveArousalButton;
+		$(".samarousalbuttons button").on("click", function(){
+			$(this).addClass("button--active");
+			$(".arousal-input").val($(this).val());
+			if(currentActiveArousalButton){
+				currentActiveArousalButton.removeClass("button--active");
+				currentActiveArousalButton = $(this);
+			} else {
+				currentActiveArousalButton = $(this);
 			}
-		});		
+		});
+
 	})
 	
-	function populateArray(){
+	/*function populateArray(){
 		var dir = "gaped/";
 		$.ajax({
 		    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
@@ -241,7 +224,7 @@
 	  		});
 	  	});
 	}
-
+	*/
 	function pad(n, width, z) {
 	  z = z || '0';
 	  n = n + '';
@@ -283,7 +266,7 @@ body {
 	margin: 0 auto;
 	padding: 10px;
 }
-button {
+.button {
 	background: #25A6E1;
 	background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
@@ -304,7 +287,7 @@ button {
 	width: 75px;
 	margin: 10px 0px 0px 0px;
 }  
-button:hover{
+.button:hover{
 	background: #66C1EA;
 	background: -moz-linear-gradient(top,#66C1EA 0%,#188BC0 100%);
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#66C1EA),color-stop(100%,#188BC0));
@@ -333,25 +316,91 @@ button:hover{
 	margin: 0 auto;
 	padding: 15px;
 }
+.samvalence {
+	background: url('images/samvalence.png') no-repeat;
+	transform: scaleX(-1);
+	width: 498px;
+	height: 102px;
+	margin: 0 auto;
+}
+.samarousal {
+	background: url('images/samarousal.png') no-repeat;
+	width: 498px;
+	transform: scaleX(-1);
+	height: 102px;
+	margin: 0 auto;
+}
+.samvalencebuttons button, .samarousalbuttons button{
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	background: #eeeeee;
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc));
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+	background: -o-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+	background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
+	border: 1px solid #cecece;
+}
+.button--active{
+	background: #25A6E1 !important;
+	background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%) !important;
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0)) !important;
+	background: -webkit-linear-gradient(top,#25A6E1 0%,#188BC0 100%) !important;
+	background: -o-linear-gradient(top,#25A6E1 0%,#188BC0 100%) !important;
+	background: -ms-linear-gradient(top,#25A6E1 0%,#188BC0 100%) !important;
+	background: linear-gradient(top,#25A6E1 0%,#188BC0 100%) !important;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0) !important;
+	border: 1px solid #15719C;
+}
 </style>
 </head>
+
 <body>
 <div class="wrap">
 	<div class="image-container">
-	<button class="start" style="width: 100%;">Start</button>
+	<button class="start button" style="width: 100%;">Start</button>
 		<img src="" width="640" height="480" data-control-valence="0" data-control-arousal="0" />
 		<div class="valance-selection" style="display:inline-block;">
-			<div style="margin: 5px 0px 5px 0px;">Valence: <span class="valence-num">50</span><input class="valence-input" type="hidden" maxlength="3" /></div>
-				<div class="valence-slider" style="width: 100%;"></div><br />
-				<div style="margin: 5px 0px 5px 0px;">Arousal: <span class="arousal-num">50</span><input class="arousal-input" type="hidden" maxlength="3" /></div>
-				<div class="arousal-slider" style="width: 100%;"></div> 	<button class="submit">Next</button>
+			<div class="valence-buttons">
+				<div class="samvalence"></div>
+				<div class="samvalencebuttons">
+					<input type="hidden" class="valence-input" value="0" />
+					<button style="margin-left: 107px;" value="1"></button>
+					<button style="margin-left: 15px;" value="2"></button>
+					<button style="margin-left: 15px;" value="3"></button>
+					<button style="margin-left: 15px;" value="4"></button>
+					<button style="margin-left: 14px;" value="5"></button>
+					<button style="margin-left: 15px;" value="6"></button>
+					<button style="margin-left: 15px;" value="7"></button>
+					<button style="margin-left: 15px;" value="8"></button>
+					<button style="margin-left: 15px;" value="9"></button>
+				</div>
+				<div class="samarousal"></div>
+				<div class="samarousalbuttons">
+					<input type="hidden" class="arousal-input" value="0" />
+					<button style="margin-left: 105px;" value="1"></button>
+					<button style="margin-left: 17px;" value="2"></button>
+					<button style="margin-left: 15px;" value="3"></button>
+					<button style="margin-left: 15px;" value="4"></button>
+					<button style="margin-left: 14px;" value="5"></button>
+					<button style="margin-left: 15px;" value="6"></button>
+					<button style="margin-left: 15px;" value="7"></button>
+					<button style="margin-left: 15px;" value="8"></button>
+					<button style="margin-left: 15px;" value="9"></button>
+				</div>				
+			</div>
+			<button class="submit button">Next</button>
 		</div>
 	</div>
-	<button class="export" style="width: 200px; margin-top: 200px;">Export Data</button>
+	<button class="export button" style="width: 200px; margin-top: 200px;">Export Data</button>
 	<div class="result">
 		<textarea style="width: 100%; height: 300px;"></textarea>
 	</div>
 </div>
+
 <script src="jquery-ui.min.js"></script>
 </body>
 </html>

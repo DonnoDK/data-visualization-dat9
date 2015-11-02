@@ -137,7 +137,7 @@
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu">
                                             <li>
-                                                <a href="#" id="fft-start-poll">Start Polling(60s)</a>
+                                                <a href="#" id="fft-show">FFT</a>
                                             </li>
                                             <li>
                                                 <a href="#" id="fft-force">Force Update</a>

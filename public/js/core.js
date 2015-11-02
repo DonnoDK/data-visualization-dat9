@@ -53,7 +53,7 @@ $(document).ready(function () {
 		var maxX = 0;
 		var maxY = 0;
 	    var data = [];
-
+	    var done = false;
 		dataSets.forEach(function(set){
 			var dx = [];
 		    var dy = [];
@@ -68,11 +68,62 @@ $(document).ready(function () {
 
 		    data.push({ data:set.data, label: set.label })
 		});
+	    /*$.ajax({
+	        url: 'Api/Eeg/get/1/14',
+	        method: 'GET',
+	        success: function(response){
+	            console.log("Got data!");
+	            var bandGraph = [
+	                {label: response.label + " - Delta", data: [] },
+	                {label: response.label + " - Theta", data: [] },
+	                {label: response.label + " - Alpha", data: [] },
+	                {label: response.label + " - Beta", data: [] },
+	            ];
+	            var num = 0;
+	            var deltaDef = {lowerLimit:1, upperLimit:3, label:"Delta"},
+	                thetaDef = {lowerLimit:4, upperLimit:8, label:"Theta"},
+	                alphaDef = {lowerLimit:9, upperLimit:12, label:"Alpha"},
+	                betaDef = {lowerLimit:13, upperLimit:27, label:"Beta"};            
+	            response.data.forEach(function(reading){
+	                if(num != -1){
+		             	var tmp = [];
+		                if(num + 128 <= response.data.length){
+		                    for(var i = num; i < (128 + num) ; i++){
+		                        tmp.push(response.data[i][1]);
+		                    }
+		                }
+		                var fft = myFFT(tmp);
+		                
+		                var absoluteBandPower = {};
+		                    absoluteBandPower.Delta = computeAbsoluteBandPower(deltaDef, fft);
+		                    absoluteBandPower.Theta = computeAbsoluteBandPower(thetaDef, fft);
+		                    absoluteBandPower.Alpha = computeAbsoluteBandPower(alphaDef, fft);
+		                    absoluteBandPower.Beta = computeAbsoluteBandPower(betaDef, fft);
+		                
+		                bandGraph[0].data.push([num, absoluteBandPower.Delta]);
+		                bandGraph[1].data.push([num, absoluteBandPower.Theta]);
+		                bandGraph[2].data.push([num, absoluteBandPower.Alpha]);
+		                bandGraph[3].data.push([num, absoluteBandPower.Beta]);
+		                   	
+	                }
+
+	                num++;
+	            });
+
+	            data.push(bandGraph[0]);
+	            //data.push(bandGraph[1]);
+	            //data.push(bandGraph[2]);
+	            //data.push(bandGraph[3]);
+	            console.log("Done");
+	            done = true;
+	        }
+	    });*/
+
 
 	    var options = {
 	    	series: {lines: {show: true }, shadowSize: 0 },
 	        xaxis: { show: true, zoomRange: null, panRange: [0, maxX + 1000] },
-	        yaxis: { zoomRange: null, panRange: [-500, maxY + 500] },
+	        yaxis: { zoomRange: null, panRange: [-500, maxY + 10000] },
 	        axisLabels: {
 	            show: true
 	        },
@@ -87,10 +138,39 @@ $(document).ready(function () {
 	    	lines: { show: true },
 	    	zoom: { interactive: true },
 	        pan: { interactive: true }, 
-			grid: { hoverable: true, clickable: true }
+			grid: { 
+				hoverable: true, 
+				clickable: true,
+		        markings: [
+					{ xaxis: {from: 2196, to: 3057}, color: "#808066" },
+					{ xaxis: {from: 5242, to: 6243}, color: "#FF9966" },
+					{ xaxis: {from: 8531, to: 10248}, color: "#FF9966" },
+					{ xaxis: {from: 12475, to: 13503}, color: "#808066" },
+					{ xaxis: {from: 15481, to: 16618}, color: "#FF9966" },
+					{ xaxis: {from: 18544, to: 19687}, color: "#FF9966" },
+					{ xaxis: {from: 21655, to: 23837}, color: "#808066" },
+					{ xaxis: {from: 26231, to: 27489}, color: "#808066" },
+					{ xaxis: {from: 29894, to: 30666}, color: "#808066" },
+					{ xaxis: {from: 32920, to: 34589}, color: "#66FF33" },
+					{ xaxis: {from: 37018, to: 38033}, color: "#66FF33" },
+					{ xaxis: {from: 40525, to: 41735}, color: "#FF9966" },
+					{ xaxis: {from: 43948, to: 45561}, color: "#66FF33" },
+					{ xaxis: {from: 47733, to: 48496}, color: "#66FF33" },
+					{ xaxis: {from: 50713, to: 51821}, color: "#66FF33" }
+	        	]				
+
+			}
 	    };
 	   var el = $("#eeg-chart");
-	   $.plot(el, data, options);
+	   var idxx = setInterval(function(){
+	   	done = true;
+	   	if(done){
+	   		$.plot(el, data, options);	
+	   		clearInterval(idxx);
+	   	}
+	   }, 3000);
+	   
+	   
 
 	   plotGSR();
 	}

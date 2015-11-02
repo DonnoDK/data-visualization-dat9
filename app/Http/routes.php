@@ -16,15 +16,66 @@ Route::get('/', function(){
 
 	return view('app')->with(array('testPersons' => $testPersons));
 });
-Route::get('/Api/Eeg/get/{testcase_id}/{channel_id}', function($testCaseId, $channel_id){
+Route::get('/Api/Eeg/get/{testcase_id}/{channel_id}/{pure?}', function($testCaseId, $channel_id, $pure = 0){
 
 	$eeg_data = App\EegReading::with(array('testCase', 'channel'))->where(array('channel_id' => $channel_id, 'test_case_id' => $testCaseId))->get();
 
 
-	$return_json = array('label'=> $eeg_data[0]->channel->name, 'data' => array());
-	foreach($eeg_data as $reading){
-		array_push($return_json['data'], array($reading->timestamp, $reading->value));
+	$return_json = array('label'=> $eeg_data[0]->channel->name, 'data' => array(), 'cnt' => 0);
+
+	array_push($return_json['data'], [$eeg_data[0]->timestamp, $eeg_data[0]->value]);
+	
+	$cnt = count($eeg_data);
+	for($i = 1; $i < $cnt - 1; $i++){
+		$prev = $eeg_data[$i - 1];
+		$next = $eeg_data[$i + 1];
+
+		$avg = ($prev->value + $next->value ) / 2;
+		$perc = $avg * 0.001;
+		$x0 = $eeg_data[$i]->timestamp;
+		$y0 = $eeg_data[$i]->value;
+		$x1 = $prev->timestamp;
+		$y1 = $prev->value;
+		$x2 = $next->timestamp;
+		$y2 = $next->value;
+
+		$dist = abs(($y2-$y1)*$x0 - ($x2-$x1)*$y0 + $x2*$y1 - $y2*$x1) / sqrt(pow($y2-$y1,2) + pow($x2 - $x1, 2));
+		//if($eeg_data[$i]->value <= ($avg + $perc) && $eeg_data[$i]->value >= ($avg - $perc) )
+		if ($dist < $perc)
+		{
+			//var_dump("ja");
+			//var_dump($avg);
+			//var_dump($perc);
+			//var_dump($eeg_data[$i]->value);
+			//die;
+			//if($pure == 1)
+			//	array_push($return_json['data'], [$eeg_data[$i]->timestamp, $eeg_data[$i]->value]);
+		}
+		else
+		{
+			////var_dump($return_json);
+			array_push($return_json['data'], [$eeg_data[$i]->timestamp, $eeg_data[$i]->value]);
+			//var_dump($return_json);
+			//var_dump("nej");
+			//var_dump($avg);
+			//var_dump($perc);
+			//var_dump($eeg_data[$i]->value);
+			//die;
+		}
+
+			
 	}
+	
+	array_push($return_json['data'], [$eeg_data[$cnt-1]->timestamp, $eeg_data[$cnt-1]->value]);
+
+	$return_json['cnt'] = count($return_json['data']);
+	/*foreach($eeg_data as $reading){
+		array_push($return_json['data'], array($reading->timestamp, $reading->value));
+	}*/
+	
+	//echo count($return_json['data']) . "<br>" . count($eeg_data);
+
+	//die;
 
 	return response()->json($return_json);
 });
@@ -66,7 +117,7 @@ Route::get('Api/TestPersons/get', function(){
 });
 
 Route::get('/Api/TestCase/create/', function(){
-	$fileContents = Storage::get("/data/datacombined.json");
+	$fileContents = Storage::get("/data/dennisDataTorsdag.json");
 
 	//$fileContents;
 	$json = json_decode($fileContents, true);
@@ -107,6 +158,10 @@ Route::get('/Api/TestCase/create/', function(){
 			foreach($channel['data'] as $reading){
 				array_push($headerRows, array('test_case_id' => $testCase->id, 'channel_id'=>$c->id, 'value'=>$reading, 'timestamp' => $i));
 				$i++;
+				if($i % 200 == 0){
+					DB::table('eeg_reading')->insert($headerRows);
+					$headerRows = [];
+				}
 			}
 
 			DB::table('eeg_reading')->insert($headerRows);
@@ -139,7 +194,7 @@ Route::get('/Api/Test/cases', function(){
 });
 
 Route::get('Api/TestData/push/{test_case_id}/{person_id}', function($testCaseId, $personId){
-	$fileContents = Storage::get("/data/testData.json");
+	$fileContents = Storage::get("/data/dennisTorsdagTestDataOrg.json");
 
 	//$fileContents;
 	$json = json_decode($fileContents);
@@ -154,6 +209,8 @@ Route::get('Api/TestData/push/{test_case_id}/{person_id}', function($testCaseId,
 				'image_type' => $testImage->image_type,
 				'image_control_valence' => $testImage->control_valence,
 				'test_person_valence' => $testImage->valence,
+				'image_control_arousal' => $testImage->control_arousal,
+				'test_person_arousal' => $testImage->control_arousal,
 				'timestamp_start' => $testImage->time_image_shown,
 				'timestamp_end' => $testImage->time_clicked_next));
 	}

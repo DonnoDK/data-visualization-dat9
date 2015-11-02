@@ -96,7 +96,7 @@ function computeFFT(testCaseId, channelId, point)
 			    {
 			    	prevGraph = showFFT;
 			    }
-
+			    
 				prevGraph();
 			}
 			else
