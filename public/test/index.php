@@ -8,26 +8,24 @@
 	<script type="text/javascript">
 	//All images
 
-	var images = [];
-	images.push({url: "iaps/2981.jpg", arousal: 5.97, valence: 2.76, type: "Negative"});
-	images.push({url: "iaps/3062.jpg", arousal: 5.78, valence: 1.87, type: "Negative"});
-	images.push({url: "iaps/9040.jpg", arousal: 5.82, valence: 1.67, type: "Negative"});
-	images.push({url: "iaps/9183.jpg", arousal: 6.58, valence: 1.69, type: "Negative"});
-	images.push({url: "iaps/9325.jpg", arousal: 6.01, valence: 1.89, type: "Negative"});
-	images.push({url: "iaps/4660.jpg", arousal: 6.58, valence: 7.40, type: "Positive"});
-	images.push({url: "iaps/4680.jpg", arousal: 6.02, valence: 7.25, type: "Positive"});
-	images.push({url: "iaps/5210.jpg", arousal: 4.60, valence: 8.03, type: "Positive"});
-	images.push({url: "iaps/5825.jpg", arousal: 5.46, valence: 8.03, type: "Positive"});
-	images.push({url: "iaps/8492.jpg", arousal: 7.31, valence: 7.21, type: "Positive"});
-	images.push({url: "iaps/6314.jpg", arousal: 4.09, valence: 4.60, type: "Neutral"});
-	images.push({url: "iaps/7484.jpg", arousal: 4.29, valence: 4.99, type: "Neutral"});
-	images.push({url: "iaps/8121.jpg", arousal: 4.63, valence: 4.14, type: "Neutral"});
-	images.push({url: "iaps/8466.jpg", arousal: 4.92, valence: 4.86, type: "Neutral"});
-	images.push({url: "iaps/9171.jpg", arousal: 4.72, valence: 4.01, type: "Neutral"});
-	images.push({url: "iaps/done.png", arousal: 0, valence: 0, type: "NA"});
-	
-	
-	
+	var images = [
+		{url: "iaps/5210.jpg", arousal: 4.60, valence: 8.03, type: "Positive"},
+		{url: "iaps/7052.jpg", arousal: 3.01, valence: 5.33, type: "Neutral"},
+		{url: "iaps/3062.jpg", arousal: 5.78, valence: 1.87, type: "Negative"},
+		{url: "iaps/8121.jpg", arousal: 4.63, valence: 4.14, type: "Neutral"},
+		{url: "iaps/9325.jpg", arousal: 6.01, valence: 1.89, type: "Negative"},
+		{url: "iaps/4660.jpg", arousal: 6.58, valence: 7.40, type: "Positive"},
+		{url: "iaps/9171.jpg", arousal: 4.72, valence: 4.01, type: "Neutral"},
+		{url: "iaps/4680.jpg", arousal: 6.02, valence: 7.25, type: "Positive"},
+		{url: "iaps/9040.jpg", arousal: 5.82, valence: 1.67, type: "Negative"},
+		{url: "iaps/7484.jpg", arousal: 4.29, valence: 4.99, type: "Neutral"},
+		{url: "iaps/5825.jpg", arousal: 5.46, valence: 8.03, type: "Positive"},
+		{url: "iaps/9183.jpg", arousal: 6.58, valence: 1.69, type: "Negative"},
+		{url: "iaps/8492.jpg", arousal: 7.31, valence: 7.21, type: "Positive"},
+		{url: "iaps/3069.jpg", arousal: 7.03, valence: 1.70, type: "Negative"},
+		{url: "iaps/8466.jpg", arousal: 4.92, valence: 4.86, type: "Neutral"},
+		{url: "iaps/done.png", arousal: 0, valence: 0, type: "NA"}
+	];
 	
 	var results = {startTime: 0, endTime: 0, time: 0, data: [] };
 	var startTime; 
@@ -78,7 +76,7 @@
 
 			$(".image-container > img").css("visibility", "hidden");
 			if(currentImgIndex > 0)
-				results.data.push({"img": $(".image-container > img").attr("src"), "image_type": images[currentImgIndex].type, "valence": $(".valence-input").val(), "control_valence": images[currentImgIndex].valence, "arousal": $(".arousal-input").val(), "control_arousal": images[currentImgIndex].arousal, "time_image_shown": timeShown, "time_clicked_next": timeClicked });
+				results.data.push({"img": $(".image-container > img").attr("src"), "image_type": images[currentImgIndex - 1].type, "valence": $(".valence-input").val(), "control_valence": images[currentImgIndex - 1].valence, "arousal": $(".arousal-input").val(), "control_arousal": images[currentImgIndex - 1].arousal, "time_image_shown": timeShown, "time_clicked_next": timeClicked });
 			
 			$(".submit").attr("disabled", true);
 			$(".submit").addClass("disabled");
@@ -88,21 +86,24 @@
 				
 				$(".image-container > img").attr("src", img);
 				currentImgIndex++;
+				clearInterval(id);
 				//console.log("Positive: " + numP + " - Negative: " + numN + " - Neutral: " + numNeu);
 				var watIdx = setInterval(function(){
 					$(".image-container > img").css("visibility", "visible");
 					$(".submit").attr("disabled", false);
 					$(".submit").removeClass("disabled");					
 					clearInterval(watIdx);
-					clearInterval(id);
+					
 
-					var valSelIdx = setInterval(function(){
-						$(".valance-selection").slideDown();
-						clearInterval(valSelIdx);
-					}, 4000);
+					if(currentImgIndex != images.length){
+						var valSelIdx = setInterval(function(){
+							$(".valance-selection").slideDown();
+							clearInterval(valSelIdx);
+						}, 4000);
+					}
 
 				}, 300)
-			}, Math.floor(Math.floor(Math.random()* 1000 * 5)));
+			}, Math.floor(Math.floor(Math.random()* 1000 * 5) + 15000));
 		})
 
 		$(".export").on("click", function(){
@@ -245,7 +246,7 @@
 body {
 	padding: 0;
 	margin: 0;
-	margin-top: 25px;
+	margin-top: 5px;
 	background-color: #808080;
 	font-family: 'Open Sans', sans-serif;
 	color: #808080;
@@ -262,7 +263,7 @@ body {
 	width: 640px;
 	min-height: 300px;
 	margin: 0 auto;
-	padding: 15px;
+	padding: 2px;
 }
 .image-container > img{
 	width: 640px;
@@ -272,7 +273,7 @@ body {
 .valance-selection{
 	width: 100%;
 	margin: 0 auto;
-	padding: 10px;
+	padding: 5px;
 }
 .button {
 	background: #25A6E1;
