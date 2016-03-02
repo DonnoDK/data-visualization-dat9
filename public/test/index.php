@@ -117,6 +117,7 @@
 		})
 		var testStarted = false;
 		$(".start").on("click", function(){
+			$(".start").attr("disabled", true).addClass("disabled").text("Please wait");
 			var tstidx = setInterval(function(){
 				$.ajax({
 				    url:'/data-visualization-dat9/public/test/colrdy.txt',
