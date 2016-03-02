@@ -16,6 +16,8 @@ Route::get('/', function(){
 
 	return view('app')->with(array('testPersons' => $testPersons));
 });
+
+
 Route::get('/Api/Eeg/get/{testcase_id}/{channel_id}/{pure?}', function($testCaseId, $channel_id, $pure = 0){
 
 	$eeg_data = App\EegReading::with(array('testCase', 'channel'))->where(array('channel_id' => $channel_id, 'test_case_id' => $testCaseId))->get();
@@ -224,3 +226,9 @@ Route::get('Api/User/get/{id}', function($id){
 });
 
 
+Route::get('/saveTest/{name}/{result}', function($name, $result){
+	$str = str_random(3);
+	Storage::put('tests/'. $name . '_' . $str .'.json', $result);
+
+	return response()->json(['response' => "File saved as " . $name . "_" . $str .".json", "status" => 200]);
+})->where('result', '(.*)');
