@@ -72,10 +72,10 @@
 	var timerId; 
 	var prevTime; 
 
-	var TIME_TO_SAM = 1000; // 7000 def
-	var RANDOM_TIME = 1; // 5 def
-	var FIXED_TIME = 1000; // 20000 def
-	var RELAX_TIME = 1000;
+	var TIME_TO_SAM = 7000; // 7000 def
+	var RANDOM_TIME = 10; // 5 def
+	var FIXED_TIME = 20000; // 20000 def
+	var RELAX_TIME = 60000*3;
 
 
 	function timeNow(){
