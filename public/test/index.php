@@ -73,9 +73,9 @@
 	var prevTime; 
 
 	var TIME_TO_SAM = 7000; // 7000 def
-	var RANDOM_TIME = 10; // 5 def
+	var RANDOM_TIME = 5; // 5 def
 	var FIXED_TIME = 20000; // 20000 def
-	var RELAX_TIME = 60000*3;
+	var RELAX_TIME = 60000*3; // 60k*3
 
 
 	function timeNow(){
@@ -105,7 +105,6 @@
 	$( document ).ready(function() {
 		$(".export").hide();
 		$("#thebutton").hide();
-		$(document).tooltip();	
 		$(".result").hide();
 		$(".sam").hide();
 
@@ -137,15 +136,14 @@
 				        clearInterval(tstidx);
 				    }
 				});
-			}, 30);
-			
+			}, 30);			
 		})
 		
 		var typeS = ["Negative", "Positive", "Neutral"];
 		var imageType = "";
 		var timeShown = 0;
 		$(".submit").on("click", function(){
-			$(".tip").attr("title", "Du skal vælge aruosal/valence værdier inden du kan gå videre. Vælg ved at trykke på en cirkel-formet knap");
+			$(".tip").attr("title", "Du skal vælge arousal/valence værdier inden du kan gå videre. Vælg ved at trykke på en cirkel-formet knap");
 			
 			$(".sam").slideUp();
 			var d = new Date();  
@@ -590,7 +588,7 @@ label {
 					?>
 				</div>
 			</div>
-			<div class="tip" style="font-size:12px;" title="Du skal vælge aruosal/valence værdier inden du kan gå videre. Vælg ved at trykke på en cirkel-formet knap"><button class="submit button" id="thebutton" style="width:100%;">Next</button></div>
+			<div ><button class="submit button tip" style="font-size:12px;" title="Du skal vælge aruosal/valence værdier inden du kan gå videre. Vælg ved at trykke på en cirkel-formet knap eller en figur" id="thebutton" style="width:100%;">Next</button></div>
 		</div>
 	</div>
 	<div class="savedFile ok">
