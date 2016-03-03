@@ -79,9 +79,7 @@
 
 
 	function timeNow(){
-		var d = new Date();
-		var t = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
-		return t;
+		return new Date().getTime();
 	}
 
 	function deltaTime(){
@@ -89,12 +87,12 @@
 	}
 
 	function startTest(){
+		console.log("Test started");
 		$(".image-container > img").attr("src", "images/relax.jpg");
+		startTime = timeNow();
 		var relaxIdx = setInterval(function(){
 			$("#thebutton").show();
-			var d = new Date();
 			$("#nameBox").hide();
-			startTime = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
 			prevTime = startTime;
 			results.startTime = startTime;
 			$(".start").hide();
@@ -117,7 +115,7 @@
 		var testStarted = false;
 		$(".start").on("click", function(){
 			$(".start").attr("disabled", true).addClass("disabled").text("Please wait");
-			var tstidx = setInterval(function(){
+			/*var tstidx = setInterval(function(){
 				$.ajax({
 				    url:'/data-visualization-dat9/public/test/colrdy.txt',
 				    type:'HEAD',
@@ -136,7 +134,8 @@
 				        clearInterval(tstidx);
 				    }
 				});
-			}, 30);			
+			}, 30);*/
+			startTest();			
 		})
 		
 		var typeS = ["Negative", "Positive", "Neutral"];
@@ -162,6 +161,8 @@
 			if(currentImgIndex > 0)
 				results.data.push({"img": $(".image-container > img").attr("src"), "image_type": images[currentImgIndex - 1].type, "valence": $(".valence-input").val(), "control_valence": images[currentImgIndex - 1].valence, "arousal": $(".arousal-input").val(), "control_arousal": images[currentImgIndex - 1].arousal, "time_image_shown": timeShown, "time_clicked_next": timeClicked });
 			
+			
+
 			$(".submit").attr("disabled", true);
 			$(".submit").addClass("disabled");
 			var id = setInterval(function(){
@@ -205,7 +206,7 @@
 		$(".export").on("click", function(){
 			var d =  new Date();
 			results.time = time;
-			results.endTime = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());  
+			results.endTime = timeNow();  
 			$(".result > textarea").text((JSON.stringify(results)));
 			$(".result").fadeIn("fast");
 		});
